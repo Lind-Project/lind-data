@@ -32,6 +32,33 @@ Outliers visible in the raw runs (the medians are unaffected): run 1's 4-thread 
 (468 ns, others 128–129), run 5's native Fibonacci (860 ns, others 580–591), run 2's native 1-byte
 `pwrite` (383 ns, others 301–302), and run 2's imfs-grate reads (~45 ns higher than the other runs).
 
+## Benchmarks
+Each is a small C program in `tests/benchmarks/` that repeats one operation in a loop, reads
+`clock_gettime(CLOCK_MONOTONIC)` before and after, and prints the average time per operation.
+
+| Program | What one operation is | Parameter | Repetitions |
+|---|---|---|---|
+| `fs_read.c` | `pread()` of PARAM bytes from offset 0 of a file it created | 1, 1024, 4096, 10240 bytes | 1,000,000 (10,000 above 4 KB) |
+| `fs_write.c` | `pwrite()` of PARAM bytes at offset 0 | same | same |
+| `ipc_pipe.c` | round trip: the parent writes PARAM bytes to a child through one pipe, the child writes them back through another | same | same |
+| `ipc_uds.c` | the same round trip over an `AF_UNIX` `socketpair`, datagram and stream | same | same |
+| `cage_stress.c` | `getpid()`; `getppid()`; a mix of `getpid`/`getppid`/`getuid`/`geteuid`; that mix from 4 threads at once; `fork()` + `waitpid()` of a child that exits | – (4 threads) | 1,000,000 lookups; 2,000 forks |
+| `perf_fibonacci.c` | compute Fibonacci(1000) with a loop (no syscalls) | – | 10,000 |
+| `imfs-grate.fs_read.grate` / `imfs-grate.fs_write.grate` | `fs_read` / `fs_write` run as the cage of `imfs-grate`, which keeps files in memory and answers the reads and writes itself | as above | as above |
+
+## Method
+1. Record the setup: `scripts/test/perf_env.sh 2 > env.txt` (CPU and frequency settings, kernel,
+   mitigations, container and seccomp status, lind-wasm commit).
+2. Run `scripts/test/benchrunner.py fs_ ipc_ cage_ perf_ imfs-grate.` five times, pinned to CPU 2
+   with `taskset`. For each `.c` benchmark, benchrunner compiles it natively (`cc`, no
+   optimization flag) and for Lind (`lind_compile`, `-O2`, dynamically linked), runs both, and
+   prints both times and their ratio. For each `.grate` file it fetches the grate from
+   lind-wasm-example-grates into `tests/benchmarks/grates/`, builds it (the Rust `imfs-grate`, with
+   `cargo lind_compile --release`), and runs the cage behind it (the GRATE column).
+3. Record which grate version was built: `grates-commit.txt`.
+4. For every benchmark and parameter, take the median of the 5 runs for native, Lind and grate
+   (`data/medians.csv`, computed from `benchrunner.txt`).
+
 ## Source
 - Code: [lind-wasm](https://github.com/Lind-Project/lind-wasm), branch `lind-perf`, commit
   `0cb8221ec6bfdf62e66abf44c9528bc980076cd8` (lind-wasm `main` including #1427, plus the lind-perf
