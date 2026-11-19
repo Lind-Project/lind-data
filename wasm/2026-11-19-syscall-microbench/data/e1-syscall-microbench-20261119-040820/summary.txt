@@ -1,4 +1,5 @@
 lind-perf summary: 5 runs; net per call; median [min .. max] spread
+(values converted to ns before comparing; the CSV is in ns, or cycles with --perf=tsc)
 
 ====================================================================================================
  libc_syscall (2001): kernel call
@@ -179,26 +180,26 @@ bench_fdtables (2002) [fwd] rawposix (per-syscall)                34.0 [    33.9
  fork_wait: fork() + waitpid()
 ====================================================================================================
 timer overhead (overhead)                                         11.0 [    11.0 ..     11.0]     0.0 ns
-guest::per_call                                                    9.0 [     8.9 ..      9.2]     0.3 ms
-fork::parent_setup                                               460.5 [   452.1 ..    465.1]    13.0 us
-fork::parent_setup::snapshots                                    393.4 [   386.0 ..    397.4]    11.4 us
-fork::parent_unwind                                               92.0 [    90.7 ..     97.6]     6.8 us
-fork::parent_callback                                              4.4 [     3.9 ..      4.4]     0.5 ms
-fork::parent_callback::thread_spawn                               14.5 [    13.8 ..     27.2]    13.3 us
-fork::parent_callback::wait_for_child                              4.2 [     4.1 ..      4.3]     0.2 ms
-fork::parent_rewind                                              745.9 [   743.4 ..    749.5]     6.1 us
-fork::child_setup                                                  2.6 [     2.6 ..      2.6]     0.0 ms
-fork::child_setup::new_store                                      66.7 [    66.5 ..     66.9]     0.3 us
-fork::child_setup::new_child_linker                               21.0 [    20.3 ..     21.0]     0.8 us
-fork::child_setup::instantiate                                     1.1 [     1.1 ..      1.1]     0.0 ms
-fork::child_setup::instantiate::copy_memory                        1.0 [     1.0 ..      1.1]     0.0 ms
-fork::child_rewind_to_exit                                         3.1 [     3.0 ..      3.3]     0.3 ms
-exit::exit_call                                                    1.4 [     1.4 ..      1.5]     0.1 us
-exit::unwind                                                      89.3 [    82.9 ..    104.4]    21.4 us
-exit::cleanup                                                    755.4 [   695.1 ..    771.3]    76.2 us
-exit::cleanup::cage_finalize                                     668.9 [   599.2 ..    731.5]   132.4 us
-fork: parent setup excl. snapshots (derived)                      67.8 [    58.2 ..     76.9]    18.7 us
-fork: parent callback excl. thread spawn and waiting (derive      54.7 [  -329.9 ..    201.9]   531.8 us
-fork: child setup excl. store, linker, instantiate (derived)       1.4 [     1.4 ..      1.4]     0.0 ms
-fork: instantiate excl. copying memory (derived)                  13.9 [     8.8 ..     22.9]    14.1 us
-exit: cleanup excl. cage_finalize (derived)                       63.5 [    23.9 ..    163.4]   139.6 us
+guest::per_call                                                  9.034 [   8.923 ..    9.243]   0.320 ms
+fork::parent_setup                                             460.534 [ 452.077 ..  465.121]  13.044 us
+fork::parent_setup::snapshots                                  393.352 [ 385.982 ..  397.355]  11.373 us
+fork::parent_unwind                                             91.955 [  90.743 ..   97.591]   6.848 us
+fork::parent_callback                                            4.389 [   3.941 ..    4.448]   0.507 ms
+fork::parent_callback::thread_spawn                             14.493 [  13.806 ..   27.151]  13.345 us
+fork::parent_callback::wait_for_child                            4.219 [   4.146 ..    4.315]   0.169 ms
+fork::parent_rewind                                            745.875 [ 743.411 ..  749.499]   6.088 us
+fork::child_setup                                                2.584 [   2.572 ..    2.599]   0.027 ms
+fork::child_setup::new_store                                    66.743 [  66.545 ..   66.874]   0.329 us
+fork::child_setup::new_child_linker                             20.951 [  20.269 ..   21.043]   0.774 us
+fork::child_setup::instantiate                                   1.060 [   1.053 ..    1.064]   0.011 ms
+fork::child_setup::instantiate::copy_memory                      1.044 [   1.041 ..    1.050]   0.009 ms
+fork::child_rewind_to_exit                                       3.132 [   3.009 ..    3.263]   0.254 ms
+exit::exit_call                                                  1.441 [   1.405 ..    1.469]   0.064 us
+exit::unwind                                                    89.255 [  82.906 ..  104.352]  21.446 us
+exit::cleanup                                                  755.409 [ 695.116 ..  771.274]  76.158 us
+exit::cleanup::cage_finalize                                   668.901 [ 599.185 ..  731.541] 132.356 us
+fork: parent setup excl. snapshots (derived)                    67.766 [  58.193 ..   76.924]  18.731 us
+fork: parent callback excl. thread spawn and waiting (derive    54.736 [-329.852 ..  201.931] 531.783 us
+fork: child setup excl. store, linker, instantiate (derived)     1.439 [   1.424 ..    1.450]   0.026 ms
+fork: instantiate excl. copying memory (derived)                13.928 [   8.762 ..   22.884]  14.122 us
+exit: cleanup excl. cage_finalize (derived)                     63.454 [  23.868 ..  163.436] 139.568 us
