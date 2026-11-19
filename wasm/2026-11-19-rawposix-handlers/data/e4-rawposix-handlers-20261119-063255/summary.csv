@@ -1,0 +1,270 @@
+benchmark,name,kind,unit,runs,median,min,max
+read,timer overhead,overhead,ns,5,11.0,11.0,11.0
+read,lind_common::syscall_entry,counter,ns,5,227.3,225.0,230.2
+read,threei::make_syscall,counter,ns,5,216.7,212.4,223.9
+read,threei::make_syscall::dead_cage_check,counter,ns,5,0.8,0.8,0.8
+read,threei::make_syscall::handler_lookup,counter,ns,5,29.8,29.7,33.4
+read,threei::make_syscall::rawposix_dispatch,counter,ns,5,188.6,182.7,198.9
+read,rawposix::read,counter,ns,5,152.3,151.8,156.7
+read,rawposix::read::fd_lookup,counter,ns,5,50.2,48.2,52.3
+read,rawposix::read::kernel,counter,ns,5,105.1,103.6,106.6
+read,rawposix::clock_gettime,counter,ns,5,83.4,83.2,84.0
+read,rawposix::clock_gettime::kernel,counter,ns,5,82.7,82.6,83.3
+read,clock_gettime (228) [cage] entry,per-syscall,ns,5,120.9,119.7,122.0
+read,clock_gettime (228) [cage] 3i,per-syscall,ns,5,117.4,116.2,119.8
+read,clock_gettime (228) [cage] 3i lookup,per-syscall,ns,5,29.1,29.0,34.4
+read,clock_gettime (228) [cage] rawposix,per-syscall,ns,5,84.8,84.6,85.3
+read,select (23) [cage] entry,per-syscall,ns,5,4146000.0,3933000.0,4197000.0
+read,select (23) [cage] 3i,per-syscall,ns,5,1349000.0,81481.0,3890000.0
+read,select (23) [cage] 3i lookup,per-syscall,ns,5,42.3,38.4,6406.0
+read,select (23) [cage] rawposix,per-syscall,ns,5,221097.0,17211.0,4168000.0
+read,read (0) [cage] entry,per-syscall,ns,5,182.9,180.3,183.6
+read,read (0) [cage] 3i,per-syscall,ns,5,179.5,177.5,182.6
+read,read (0) [cage] 3i lookup,per-syscall,ns,5,31.9,30.5,31.9
+read,read (0) [cage] rawposix,per-syscall,ns,5,155.7,155.2,157.2
+read,clone (56) [cage] entry,per-syscall,ns,5,1461000.0,1387000.0,1495000.0
+read,clone (56) [cage] 3i,per-syscall,ns,5,1366000.0,1319000.0,1433000.0
+read,clone (56) [cage] 3i lookup,per-syscall,ns,5,109.5,83.5,119.5
+read,clone (56) [cage] rawposix,per-syscall,ns,5,1367000.0,1305000.0,1455000.0
+read,exit_group (231) [cage] entry,per-syscall,ns,5,1139000.0,1136000.0,1172000.0
+read,exit_group (231) [cage] 3i,per-syscall,ns,5,763261.0,759030.0,773384.0
+read,exit_group (231) [cage] 3i lookup,per-syscall,ns,5,77.5,72.0,89.5
+read,exit_group (231) [cage] rawposix,per-syscall,ns,5,758177.0,756820.0,762244.0
+read,waitpid (61) [cage] entry,per-syscall,ns,5,1244000.0,1235000.0,1275000.0
+read,waitpid (61) [cage] 3i,per-syscall,ns,5,1250000.0,1242000.0,1265000.0
+read,waitpid (61) [cage] 3i lookup,per-syscall,ns,5,71.0,57.0,89.0
+read,waitpid (61) [cage] rawposix,per-syscall,ns,5,1240000.0,1236000.0,1249000.0
+read,write (1) [cage] entry,per-syscall,ns,5,11767.0,11353.0,12439.0
+read,write (1) [cage] 3i,per-syscall,ns,5,10649.0,10095.0,11818.0
+read,write (1) [cage] 3i lookup,per-syscall,ns,5,60.6,52.1,62.0
+read,write (1) [cage] rawposix,per-syscall,ns,5,10016.0,9122.0,11775.0
+read,setitimer (38) [cage] entry,per-syscall,ns,5,10252.0,9194.0,10374.0
+read,setitimer (38) [cage] 3i,per-syscall,ns,5,9347.0,6883.0,11017.0
+read,setitimer (38) [cage] 3i lookup,per-syscall,ns,5,90.5,86.0,96.0
+read,setitimer (38) [cage] rawposix,per-syscall,ns,5,10279.0,7247.0,11099.0
+read,pipe (22) [cage] entry,per-syscall,ns,5,2288.0,2087.0,2603.0
+read,pipe (22) [cage] 3i,per-syscall,ns,5,2258.0,2152.0,3341.0
+read,pipe (22) [cage] 3i lookup,per-syscall,ns,5,58.8,50.0,83.0
+read,pipe (22) [cage] rawposix,per-syscall,ns,5,2183.0,1951.0,2231.0
+read,open (2) [cage] entry,per-syscall,ns,5,6874.0,6420.0,7294.0
+read,open (2) [cage] 3i,per-syscall,ns,5,6139.0,6005.0,6250.0
+read,open (2) [cage] 3i lookup,per-syscall,ns,5,144.0,116.0,157.0
+read,open (2) [cage] rawposix,per-syscall,ns,5,5900.0,5615.0,6118.0
+read,brk (12) [cage] entry,per-syscall,ns,5,2197.0,1988.0,2886.0
+read,brk (12) [cage] 3i,per-syscall,ns,5,2035.0,1828.0,2789.0
+read,brk (12) [cage] 3i lookup,per-syscall,ns,5,80.0,69.0,93.3
+read,brk (12) [cage] rawposix,per-syscall,ns,5,2223.0,1931.0,2738.0
+read,close (3) [cage] entry,per-syscall,ns,5,457.5,418.0,489.2
+read,close (3) [cage] 3i,per-syscall,ns,5,396.8,376.2,407.8
+read,close (3) [cage] 3i lookup,per-syscall,ns,5,56.5,54.0,664.5
+read,close (3) [cage] rawposix,per-syscall,ns,5,360.5,340.5,251011.0
+read,sigaction (13) [cage] entry,per-syscall,ns,5,311.0,274.6,353.9
+read,sigaction (13) [cage] 3i,per-syscall,ns,5,265.4,250.0,320.5
+read,sigaction (13) [cage] 3i lookup,per-syscall,ns,5,49.9,47.4,57.0
+read,sigaction (13) [cage] rawposix,per-syscall,ns,5,221.0,207.5,225.2
+read,RawPOSIX read excl. fd lookup and kernel read,derived,ns,5,-1.5,-4.6,0.7
+read,RawPOSIX clock_gettime excl. kernel call,derived,ns,5,0.8,0.0,1.0
+select,timer overhead,overhead,ns,5,11.0,11.0,11.0
+select,lind_common::syscall_entry,counter,ns,5,301.6,300.4,306.1
+select,threei::make_syscall,counter,ns,5,293.7,278.9,296.8
+select,threei::make_syscall::dead_cage_check,counter,ns,5,0.8,0.8,0.8
+select,threei::make_syscall::handler_lookup,counter,ns,5,31.7,30.2,33.0
+select,threei::make_syscall::rawposix_dispatch,counter,ns,5,256.0,242.2,258.2
+select,rawposix::select,counter,ns,5,1072.0,1069.0,1099.0
+select,rawposix::select::prepare_fdsets,counter,ns,5,688.1,672.5,689.4
+select,rawposix::select::kernel_loop,counter,ns,5,261.1,260.0,263.9
+select,rawposix::select::results,counter,ns,5,107.4,107.1,108.5
+select,select (23) [cage] entry,per-syscall,ns,5,2381.0,2342.0,2396.0
+select,select (23) [cage] 3i,per-syscall,ns,5,2367.0,2295.0,2379.0
+select,select (23) [cage] 3i lookup,per-syscall,ns,5,45.1,44.1,48.8
+select,select (23) [cage] rawposix,per-syscall,ns,5,2307.0,2255.0,2335.0
+select,clock_gettime (228) [cage] entry,per-syscall,ns,5,120.3,118.4,121.7
+select,clock_gettime (228) [cage] 3i,per-syscall,ns,5,116.9,114.8,119.4
+select,clock_gettime (228) [cage] 3i lookup,per-syscall,ns,5,30.5,29.1,31.7
+select,clock_gettime (228) [cage] rawposix,per-syscall,ns,5,84.6,84.6,84.9
+select,clone (56) [cage] entry,per-syscall,ns,5,1412000.0,1365000.0,1481000.0
+select,clone (56) [cage] 3i,per-syscall,ns,5,1326000.0,1322000.0,1412000.0
+select,clone (56) [cage] 3i lookup,per-syscall,ns,5,108.5,74.5,147.5
+select,clone (56) [cage] rawposix,per-syscall,ns,5,1337000.0,1310000.0,1365000.0
+select,exit_group (231) [cage] entry,per-syscall,ns,5,1172000.0,1139000.0,1188000.0
+select,exit_group (231) [cage] 3i,per-syscall,ns,5,758595.0,756073.0,777457.0
+select,exit_group (231) [cage] 3i lookup,per-syscall,ns,5,71.5,67.8,105.8
+select,exit_group (231) [cage] rawposix,per-syscall,ns,5,764560.0,754798.0,784009.0
+select,waitpid (61) [cage] entry,per-syscall,ns,5,1273000.0,1234000.0,1288000.0
+select,waitpid (61) [cage] 3i,per-syscall,ns,5,1242000.0,1233000.0,1274000.0
+select,waitpid (61) [cage] 3i lookup,per-syscall,ns,5,71.0,58.0,443.0
+select,waitpid (61) [cage] rawposix,per-syscall,ns,5,1255000.0,1242000.0,1284000.0
+select,write (1) [cage] entry,per-syscall,ns,5,11334.0,10367.0,11639.0
+select,write (1) [cage] 3i,per-syscall,ns,5,10248.0,9773.0,11649.0
+select,write (1) [cage] 3i lookup,per-syscall,ns,5,64.9,61.3,82.6
+select,write (1) [cage] rawposix,per-syscall,ns,5,9954.0,9188.0,11122.0
+select,open (2) [cage] entry,per-syscall,ns,5,16584.0,14848.0,17915.0
+select,open (2) [cage] 3i,per-syscall,ns,5,14711.0,14377.0,15002.0
+select,open (2) [cage] 3i lookup,per-syscall,ns,5,69.5,47.5,76.0
+select,open (2) [cage] rawposix,per-syscall,ns,5,14598.0,14268.0,14925.0
+select,setitimer (38) [cage] entry,per-syscall,ns,5,10873.0,9489.0,11214.0
+select,setitimer (38) [cage] 3i,per-syscall,ns,5,10152.0,9254.0,11187.0
+select,setitimer (38) [cage] 3i lookup,per-syscall,ns,5,86.5,82.0,126.0
+select,setitimer (38) [cage] rawposix,per-syscall,ns,5,9452.0,7654.0,11078.0
+select,unlink (87) [cage] entry,per-syscall,ns,5,20028.0,18665.0,21256.0
+select,unlink (87) [cage] 3i,per-syscall,ns,5,18615.0,18010.0,20127.0
+select,unlink (87) [cage] 3i lookup,per-syscall,ns,5,60.0,58.0,115.0
+select,unlink (87) [cage] rawposix,per-syscall,ns,5,17856.0,17313.0,19165.0
+select,close (3) [cage] entry,per-syscall,ns,5,451.7,439.2,484.8
+select,close (3) [cage] 3i,per-syscall,ns,5,459.4,443.7,806.8
+select,close (3) [cage] 3i lookup,per-syscall,ns,5,45.4,42.3,349.5
+select,close (3) [cage] rawposix,per-syscall,ns,5,407.2,392.2,438.2
+select,brk (12) [cage] entry,per-syscall,ns,5,2182.0,2107.0,2559.0
+select,brk (12) [cage] 3i,per-syscall,ns,5,2175.0,1896.0,3023.0
+select,brk (12) [cage] 3i lookup,per-syscall,ns,5,75.7,62.3,78.3
+select,brk (12) [cage] rawposix,per-syscall,ns,5,1935.0,1911.0,2401.0
+select,pipe (22) [cage] entry,per-syscall,ns,5,1963.0,1867.0,2123.0
+select,pipe (22) [cage] 3i,per-syscall,ns,5,2103.0,1984.0,2165.0
+select,pipe (22) [cage] 3i lookup,per-syscall,ns,5,63.0,60.0,87.5
+select,pipe (22) [cage] rawposix,per-syscall,ns,5,1931.0,1712.0,2016.0
+select,dup (32) [cage] entry,per-syscall,ns,5,395.3,345.1,434.1
+select,dup (32) [cage] 3i,per-syscall,ns,5,392.1,348.9,423.5
+select,dup (32) [cage] 3i lookup,per-syscall,ns,5,33.9,33.6,38.2
+select,dup (32) [cage] rawposix,per-syscall,ns,5,361.9,332.3,393.5
+select,sigaction (13) [cage] entry,per-syscall,ns,5,179.5,142.3,190.9
+select,sigaction (13) [cage] 3i,per-syscall,ns,5,125.3,97.1,171.9
+select,sigaction (13) [cage] 3i lookup,per-syscall,ns,5,41.7,39.8,49.8
+select,sigaction (13) [cage] rawposix,per-syscall,ns,5,127.7,74.5,144.7
+select,read (0) [cage] entry,per-syscall,ns,5,488.8,457.3,574.5
+select,read (0) [cage] 3i,per-syscall,ns,5,508.2,456.5,562.3
+select,read (0) [cage] 3i lookup,per-syscall,ns,5,56.7,46.7,66.0
+select,read (0) [cage] rawposix,per-syscall,ns,5,436.2,402.2,478.3
+select,prlimit64 (302) [cage] entry,per-syscall,ns,5,400.0,386.0,517.0
+select,prlimit64 (302) [cage] 3i,per-syscall,ns,5,310.0,267.0,370.0
+select,prlimit64 (302) [cage] 3i lookup,per-syscall,ns,5,138.0,100.0,166.0
+select,prlimit64 (302) [cage] rawposix,per-syscall,ns,5,86.0,79.0,116.0
+select,getpid (39) [cage] entry,per-syscall,ns,5,242.0,211.0,276.0
+select,getpid (39) [cage] 3i,per-syscall,ns,5,176.0,163.0,203.0
+select,getpid (39) [cage] 3i lookup,per-syscall,ns,5,93.0,75.0,97.0
+select,getpid (39) [cage] rawposix,per-syscall,ns,5,102.0,85.0,109.0
+select,"RawPOSIX select (poll) excl. fd sets, kernel loop, results",derived,ns,5,25.1,13.6,55.5
+stat,timer overhead,overhead,ns,5,11.0,11.0,11.0
+stat,lind_common::syscall_entry,counter,ns,5,299.5,285.3,303.3
+stat,threei::make_syscall,counter,ns,5,293.0,291.7,297.1
+stat,threei::make_syscall::dead_cage_check,counter,ns,5,0.8,0.8,0.8
+stat,threei::make_syscall::handler_lookup,counter,ns,5,30.4,29.2,34.4
+stat,threei::make_syscall::rawposix_dispatch,counter,ns,5,255.7,242.1,257.8
+stat,rawposix::stat,counter,ns,5,1005.0,999.9,1035.0
+stat,rawposix::stat::path,counter,ns,5,164.1,163.9,164.9
+stat,rawposix::stat::kernel,counter,ns,5,829.5,825.6,855.7
+stat,rawposix::stat::copy_out,counter,ns,5,1.2,1.1,1.3
+stat,clock_gettime (228) [cage] entry,per-syscall,ns,5,120.5,120.3,122.2
+stat,clock_gettime (228) [cage] 3i,per-syscall,ns,5,117.7,117.2,120.3
+stat,clock_gettime (228) [cage] 3i lookup,per-syscall,ns,5,30.4,29.0,34.4
+stat,clock_gettime (228) [cage] rawposix,per-syscall,ns,5,84.7,84.5,89.8
+stat,select (23) [cage] entry,per-syscall,ns,5,4127000.0,201945.0,8011000.0
+stat,select (23) [cage] 3i,per-syscall,ns,5,488867.0,249179.0,4058000.0
+stat,select (23) [cage] 3i lookup,per-syscall,ns,5,42.6,36.9,57.6
+stat,select (23) [cage] rawposix,per-syscall,ns,5,619896.0,114034.0,4078000.0
+stat,stat (4) [cage] entry,per-syscall,ns,5,1053.0,1051.0,1079.0
+stat,stat (4) [cage] 3i,per-syscall,ns,5,1036.0,1031.0,1046.0
+stat,stat (4) [cage] 3i lookup,per-syscall,ns,5,30.8,30.6,34.6
+stat,stat (4) [cage] rawposix,per-syscall,ns,5,1031.0,1019.0,1051.0
+stat,clone (56) [cage] entry,per-syscall,ns,5,1403000.0,1392000.0,1501000.0
+stat,clone (56) [cage] 3i,per-syscall,ns,5,1310000.0,1262000.0,1410000.0
+stat,clone (56) [cage] 3i lookup,per-syscall,ns,5,88.0,69.5,101.0
+stat,clone (56) [cage] rawposix,per-syscall,ns,5,1369000.0,1317000.0,1400000.0
+stat,exit_group (231) [cage] entry,per-syscall,ns,5,1141000.0,1139000.0,1172000.0
+stat,exit_group (231) [cage] 3i,per-syscall,ns,5,759404.0,753740.0,759796.0
+stat,exit_group (231) [cage] 3i lookup,per-syscall,ns,5,72.2,68.0,81.5
+stat,exit_group (231) [cage] rawposix,per-syscall,ns,5,756330.0,754351.0,758019.0
+stat,waitpid (61) [cage] entry,per-syscall,ns,5,1250000.0,1240000.0,1279000.0
+stat,waitpid (61) [cage] 3i,per-syscall,ns,5,1235000.0,1230000.0,1248000.0
+stat,waitpid (61) [cage] 3i lookup,per-syscall,ns,5,74.0,58.0,123.0
+stat,waitpid (61) [cage] rawposix,per-syscall,ns,5,1244000.0,1224000.0,1248000.0
+stat,write (1) [cage] entry,per-syscall,ns,5,11629.0,9940.0,12941.0
+stat,write (1) [cage] 3i,per-syscall,ns,5,10804.0,9790.0,11321.0
+stat,write (1) [cage] 3i lookup,per-syscall,ns,5,58.1,54.0,68.7
+stat,write (1) [cage] rawposix,per-syscall,ns,5,10507.0,10147.0,12049.0
+stat,setitimer (38) [cage] entry,per-syscall,ns,5,9220.0,8816.0,12132.0
+stat,setitimer (38) [cage] 3i,per-syscall,ns,5,9745.0,8998.0,10527.0
+stat,setitimer (38) [cage] 3i lookup,per-syscall,ns,5,87.0,83.0,128.5
+stat,setitimer (38) [cage] rawposix,per-syscall,ns,5,9783.0,8423.0,11072.0
+stat,pipe (22) [cage] entry,per-syscall,ns,5,2498.0,2170.0,2549.0
+stat,pipe (22) [cage] 3i,per-syscall,ns,5,2380.0,2175.0,2521.0
+stat,pipe (22) [cage] 3i lookup,per-syscall,ns,5,51.2,48.0,53.5
+stat,pipe (22) [cage] rawposix,per-syscall,ns,5,2349.0,2216.0,2409.0
+stat,brk (12) [cage] entry,per-syscall,ns,5,2314.0,2133.0,2874.0
+stat,brk (12) [cage] 3i,per-syscall,ns,5,2282.0,2040.0,2384.0
+stat,brk (12) [cage] 3i lookup,per-syscall,ns,5,91.3,82.3,112.3
+stat,brk (12) [cage] rawposix,per-syscall,ns,5,2065.0,1817.0,2406.0
+stat,close (3) [cage] entry,per-syscall,ns,5,442.7,409.7,564.2
+stat,close (3) [cage] 3i,per-syscall,ns,5,430.1,399.2,433.3
+stat,close (3) [cage] 3i lookup,per-syscall,ns,5,54.6,47.5,665.1
+stat,close (3) [cage] rawposix,per-syscall,ns,5,344.4,343.0,368.0
+stat,read (0) [cage] entry,per-syscall,ns,5,521.3,502.5,560.2
+stat,read (0) [cage] 3i,per-syscall,ns,5,550.5,499.2,609.3
+stat,read (0) [cage] 3i lookup,per-syscall,ns,5,65.5,54.8,68.2
+stat,read (0) [cage] rawposix,per-syscall,ns,5,495.8,449.3,646.3
+stat,sigaction (13) [cage] entry,per-syscall,ns,5,299.1,267.1,467.1
+stat,sigaction (13) [cage] 3i,per-syscall,ns,5,279.6,241.9,291.9
+stat,sigaction (13) [cage] 3i lookup,per-syscall,ns,5,53.5,52.9,59.6
+stat,sigaction (13) [cage] rawposix,per-syscall,ns,5,242.5,237.8,248.8
+stat,"RawPOSIX stat excl. path, kernel stat, copy-out",derived,ns,5,9.3,-10.1,39.1
+write,timer overhead,overhead,ns,5,11.0,11.0,11.0
+write,lind_common::syscall_entry,counter,ns,5,222.5,221.6,224.4
+write,threei::make_syscall,counter,ns,5,214.8,212.1,217.6
+write,threei::make_syscall::dead_cage_check,counter,ns,5,0.8,0.8,0.8
+write,threei::make_syscall::handler_lookup,counter,ns,5,30.5,29.8,31.8
+write,threei::make_syscall::rawposix_dispatch,counter,ns,5,183.5,173.8,184.2
+write,rawposix::write,counter,ns,5,134.9,134.6,135.6
+write,rawposix::write::fd_lookup,counter,ns,5,49.1,47.7,49.7
+write,rawposix::write::kernel,counter,ns,5,86.6,86.3,86.8
+write,clock_gettime (228) [cage] entry,per-syscall,ns,5,120.4,119.6,121.7
+write,clock_gettime (228) [cage] 3i,per-syscall,ns,5,117.3,116.1,117.6
+write,clock_gettime (228) [cage] 3i lookup,per-syscall,ns,5,30.4,29.1,32.8
+write,clock_gettime (228) [cage] rawposix,per-syscall,ns,5,84.8,84.7,85.0
+write,select (23) [cage] entry,per-syscall,ns,5,4160000.0,244769.0,4186000.0
+write,select (23) [cage] 3i,per-syscall,ns,5,1182000.0,30071.0,4148000.0
+write,select (23) [cage] 3i lookup,per-syscall,ns,5,39.3,38.7,44.4
+write,select (23) [cage] rawposix,per-syscall,ns,5,235179.0,89271.0,4145000.0
+write,write (1) [cage] entry,per-syscall,ns,5,166.2,165.3,167.4
+write,write (1) [cage] 3i,per-syscall,ns,5,161.0,160.9,162.2
+write,write (1) [cage] 3i lookup,per-syscall,ns,5,30.8,29.1,31.8
+write,write (1) [cage] rawposix,per-syscall,ns,5,137.6,137.5,139.4
+write,clone (56) [cage] entry,per-syscall,ns,5,1400000.0,1393000.0,1407000.0
+write,clone (56) [cage] 3i,per-syscall,ns,5,1354000.0,1313000.0,1390000.0
+write,clone (56) [cage] 3i lookup,per-syscall,ns,5,117.5,90.5,124.0
+write,clone (56) [cage] rawposix,per-syscall,ns,5,1318000.0,1302000.0,1348000.0
+write,exit_group (231) [cage] entry,per-syscall,ns,5,1164000.0,1125000.0,1176000.0
+write,exit_group (231) [cage] 3i,per-syscall,ns,5,758317.0,754418.0,780888.0
+write,exit_group (231) [cage] 3i lookup,per-syscall,ns,5,75.0,70.8,89.2
+write,exit_group (231) [cage] rawposix,per-syscall,ns,5,754414.0,751788.0,762627.0
+write,waitpid (61) [cage] entry,per-syscall,ns,5,1264000.0,1216000.0,1283000.0
+write,waitpid (61) [cage] 3i,per-syscall,ns,5,1242000.0,1232000.0,1277000.0
+write,waitpid (61) [cage] 3i lookup,per-syscall,ns,5,108.0,79.0,127.0
+write,waitpid (61) [cage] rawposix,per-syscall,ns,5,1234000.0,1224000.0,1238000.0
+write,setitimer (38) [cage] entry,per-syscall,ns,5,10246.0,7239.0,12066.0
+write,setitimer (38) [cage] 3i,per-syscall,ns,5,9001.0,7975.0,10277.0
+write,setitimer (38) [cage] 3i lookup,per-syscall,ns,5,84.5,74.5,134.0
+write,setitimer (38) [cage] rawposix,per-syscall,ns,5,8579.0,7146.0,10175.0
+write,pipe (22) [cage] entry,per-syscall,ns,5,2193.0,1984.0,2350.0
+write,pipe (22) [cage] 3i,per-syscall,ns,5,2199.0,1987.0,2321.0
+write,pipe (22) [cage] 3i lookup,per-syscall,ns,5,58.0,45.8,69.2
+write,pipe (22) [cage] rawposix,per-syscall,ns,5,2079.0,2029.0,2370.0
+write,brk (12) [cage] entry,per-syscall,ns,5,2287.0,2170.0,3330.0
+write,brk (12) [cage] 3i,per-syscall,ns,5,2404.0,2302.0,3234.0
+write,brk (12) [cage] 3i lookup,per-syscall,ns,5,91.0,68.0,104.0
+write,brk (12) [cage] rawposix,per-syscall,ns,5,2357.0,2113.0,2644.0
+write,open (2) [cage] entry,per-syscall,ns,5,6538.0,6054.0,7000.0
+write,open (2) [cage] 3i,per-syscall,ns,5,6054.0,5797.0,6122.0
+write,open (2) [cage] 3i lookup,per-syscall,ns,5,159.0,136.0,192.0
+write,open (2) [cage] rawposix,per-syscall,ns,5,6101.0,5835.0,6480.0
+write,close (3) [cage] entry,per-syscall,ns,5,453.2,442.1,530.8
+write,close (3) [cage] 3i,per-syscall,ns,5,391.9,375.3,252066.0
+write,close (3) [cage] 3i lookup,per-syscall,ns,5,52.8,49.8,666.6
+write,close (3) [cage] rawposix,per-syscall,ns,5,362.4,333.5,391.0
+write,read (0) [cage] entry,per-syscall,ns,5,531.5,509.2,617.7
+write,read (0) [cage] 3i,per-syscall,ns,5,515.2,464.8,545.5
+write,read (0) [cage] 3i lookup,per-syscall,ns,5,56.5,47.2,62.0
+write,read (0) [cage] rawposix,per-syscall,ns,5,497.2,455.0,529.7
+write,sigaction (13) [cage] entry,per-syscall,ns,5,301.8,261.1,322.6
+write,sigaction (13) [cage] 3i,per-syscall,ns,5,262.1,260.8,290.9
+write,sigaction (13) [cage] 3i lookup,per-syscall,ns,5,54.0,47.5,63.1
+write,sigaction (13) [cage] rawposix,per-syscall,ns,5,210.5,201.4,268.4
+write,RawPOSIX write excl. fd lookup and kernel write,derived,ns,5,-0.6,-1.8,1.2

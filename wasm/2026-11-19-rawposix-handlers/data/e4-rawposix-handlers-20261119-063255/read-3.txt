@@ -1,0 +1,78 @@
+==================================================
+ read
+==================================================
+[lind-perf] run 1/13: lind_common::syscall_entry
+Simple read: 0.2815 microseconds
+[lind-perf] run 2/13: threei::make_syscall
+Simple read: 0.2804 microseconds
+[lind-perf] run 3/13: threei::make_syscall::dead_cage_check
+Simple read: 0.2735 microseconds
+[lind-perf] run 4/13: threei::make_syscall::handler_lookup
+Simple read: 0.2810 microseconds
+[lind-perf] run 5/13: threei::make_syscall::rawposix_dispatch
+Simple read: 0.2790 microseconds
+[lind-perf] run 6/13: threei::make_syscall::threei_dispatch
+Simple read: 0.2375 microseconds
+[lind-perf] run 7/13: threei::make_syscall::grate_inflight_enter
+Simple read: 0.2387 microseconds
+[lind-perf] run 8/13: threei::make_syscall::grate_inflight_exit
+Simple read: 0.2421 microseconds
+[lind-perf] run 9/13: rawposix::read
+Simple read: 0.2821 microseconds
+[lind-perf] run 10/13: rawposix::read::fd_lookup
+Simple read: 0.2855 microseconds
+[lind-perf] run 11/13: rawposix::read::kernel
+Simple read: 0.2774 microseconds
+[lind-perf] run 12/13: rawposix::clock_gettime
+Simple read: 0.2476 microseconds
+[lind-perf] run 13/13: rawposix::clock_gettime::kernel
+Simple read: 0.2397 microseconds
+
+scope: all syscalls. Per-layer totals below mix all syscalls and origins; see the PER SYSCALL table for the breakdown.
+
+timer overhead per measurement: 11.0 ns (subtracted in net/call and DERIVED)
+
+---------------------------------------------- LIND_COMMON ----------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+lind_common::syscall_entry                               394521     93.759 ms      237.7 ns      226.7 ns
+
+------------------------------------------------ THREEI -------------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+threei::make_syscall                                     804519    179.731 ms      223.4 ns      212.4 ns
+threei::make_syscall::dead_cage_check                    418805      4.932 ms       11.8 ns        0.8 ns
+threei::make_syscall::handler_lookup                     396819     16.202 ms       40.8 ns       29.8 ns
+threei::make_syscall::rawposix_dispatch                  429272     90.120 ms      209.9 ns      198.9 ns
+
+----------------------------------------------- RAWPOSIX ------------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+rawposix::read                                            93228     15.638 ms      167.7 ns      156.7 ns
+rawposix::read::fd_lookup                                101323      6.347 ms       62.6 ns       51.6 ns
+rawposix::read::kernel                                   104463     12.287 ms      117.6 ns      106.6 ns
+rawposix::clock_gettime                                  311648     29.507 ms       94.7 ns       83.7 ns
+rawposix::clock_gettime::kernel                          633967     59.384 ms       93.7 ns       82.7 ns
+
+-------------------------------------------- PER SYSCALL (net/call; total = time in the syscall entry) ---------------------------------------------
+syscall                    origin      calls       total  share       entry          3i   3i lookup    rawposix     3i call       grate  grate wasm
+----------------------------------------------------------------------------------------------------------------------------------------------------
+clock_gettime (228)        cage       298218   39.670 ms  42.3%    122.0 ns    116.7 ns     29.1 ns     84.7 ns           -           -           -
+select (23)                cage            7   27.561 ms  29.4%    3.937 ms    1.349 ms     40.4 ns   17.211 us           -           -           -
+read (0)                   cage        96252   18.728 ms  20.0%    183.6 ns    182.6 ns     31.9 ns    155.2 ns           -           -           -
+clone (56)                 cage            3    4.160 ms   4.4%    1.387 ms    1.412 ms    119.5 ns    1.394 ms           -           -           -
+exit_group (231)           cage            2    2.274 ms   2.4%    1.137 ms  763.261 us     77.5 ns  757.392 us           -           -           -
+waitpid (61)               cage            1    1.235 ms   1.3%    1.235 ms    1.255 ms     89.0 ns    1.241 ms           -           -           -
+write (1)                  cage            7   81.099 us   0.1%   11.575 us   10.896 us     60.9 ns    9.122 us           -           -           -
+setitimer (38)             cage            2   19.614 us   0.0%    9.796 us   10.341 us     96.0 ns    7.247 us           -           -           -
+pipe (22)                  cage            4    8.394 us   0.0%    2.087 us    2.440 us     50.0 ns    2.231 us           -           -           -
+brk (12)                   cage            3    7.575 us   0.0%    2.514 us    1.828 us     92.3 ns    2.738 us           -           -           -
+close (3)                  cage           13    6.502 us   0.0%    489.2 ns    392.3 ns     54.0 ns  251.011 us           -           -           -
+open (2)                   cage            1    6.431 us   0.0%    6.420 us    6.139 us    144.0 ns    5.900 us           -           -           -
+sigaction (13)             cage            8    2.429 us   0.0%    292.6 ns    320.5 ns     48.1 ns    207.5 ns           -           -           -
+origin: cage = program's own call, grate = grate's own call, fwd = made by a grate while servicing another call
+
+----------------------------- DERIVED (net/call: outer minus nested timers) -----------------------------
+RawPOSIX read excl. fd lookup and kernel read                                                     -1.5 ns
+RawPOSIX clock_gettime excl. kernel call                                                           1.0 ns
+
