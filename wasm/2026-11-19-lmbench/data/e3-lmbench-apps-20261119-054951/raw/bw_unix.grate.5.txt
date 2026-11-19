@@ -1,0 +1,4 @@
+AF_UNIX sock stream bandwidth: 9199.52 MB/sec
+[testing-grate] result: Ok(
+    0,
+)

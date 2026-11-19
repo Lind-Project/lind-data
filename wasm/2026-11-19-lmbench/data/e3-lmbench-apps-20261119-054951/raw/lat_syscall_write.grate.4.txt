@@ -1,0 +1,4 @@
+Simple write: 0.6498 microseconds
+[testing-grate] result: Ok(
+    0,
+)

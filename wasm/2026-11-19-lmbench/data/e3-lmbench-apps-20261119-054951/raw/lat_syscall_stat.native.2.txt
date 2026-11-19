@@ -1,0 +1,1 @@
+Simple stat: 0.6638 microseconds

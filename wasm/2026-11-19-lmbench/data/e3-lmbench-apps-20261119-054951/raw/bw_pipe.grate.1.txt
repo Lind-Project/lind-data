@@ -1,0 +1,5 @@
+[testing-grate] make_threei_call failed for syscall 1: MakeSyscallError(-32)
+Pipe bandwidth: 8792.66 MB/sec
+[testing-grate] result: Ok(
+    0,
+)

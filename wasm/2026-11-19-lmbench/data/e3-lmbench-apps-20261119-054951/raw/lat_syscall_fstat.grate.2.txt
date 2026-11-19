@@ -1,0 +1,4 @@
+Simple fstat: 1.1917 microseconds
+[testing-grate] result: Ok(
+    0,
+)

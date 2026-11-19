@@ -1,0 +1,1 @@
+Signal handler installation: 0.0950 microseconds

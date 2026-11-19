@@ -1,0 +1,4 @@
+Select on 10 fd's: 1.7715 microseconds
+[testing-grate] result: Ok(
+    0,
+)

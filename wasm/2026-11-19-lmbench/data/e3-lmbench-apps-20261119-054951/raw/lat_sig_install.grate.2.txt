@@ -1,0 +1,4 @@
+Signal handler installation: 0.1165 microseconds
+[testing-grate] result: Ok(
+    0,
+)

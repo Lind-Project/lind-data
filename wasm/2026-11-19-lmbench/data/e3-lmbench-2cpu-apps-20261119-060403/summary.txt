@@ -1,0 +1,11 @@
+lind-perf app benchmarks: median per workload and mode (lower is better, except MB/s)
+lind-native and grate-lind are differences of medians; x is the ratio.
+
+workload             unit      native       lind      grate   lind-native      x   grate-lind      x
+----------------------------------------------------------------------------------------------------
+lat_ctx_2            us          1.42       1.37       1.19         -0.05 0.9648        -0.18 0.8686
+lat_pagefault        us        0.0994     0.0985     0.0987       -0.0009 0.9909       0.0002  1.002
+
+Spread: median [min .. max] (runs used / failed)
+  lat_ctx_2            native 1.42 [1.33 .. 1.78] (5/0); lind 1.37 [1.22 .. 1.52] (5/0); grate 1.19 [1.1 .. 1.22] (5/0)
+  lat_pagefault        native 0.0994 [0.0989 .. 0.0996] (5/0); lind 0.0985 [0.0983 .. 0.0986] (5/0); grate 0.0987 [0.0984 .. 0.0987] (5/0)

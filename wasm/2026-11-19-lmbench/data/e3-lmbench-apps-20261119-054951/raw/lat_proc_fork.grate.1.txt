@@ -1,0 +1,4 @@
+Process fork+exit: 9606.0000 microseconds
+[testing-grate] result: Ok(
+    0,
+)

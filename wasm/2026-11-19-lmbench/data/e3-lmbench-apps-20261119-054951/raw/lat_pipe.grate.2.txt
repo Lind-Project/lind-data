@@ -1,0 +1,5 @@
+[testing-grate] make_threei_call failed for syscall 0: MakeSyscallError(-4)
+Pipe latency: 4.5042 microseconds
+[testing-grate] result: Ok(
+    0,
+)

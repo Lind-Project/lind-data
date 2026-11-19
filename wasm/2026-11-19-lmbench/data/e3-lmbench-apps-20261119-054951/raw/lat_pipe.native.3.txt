@@ -1,0 +1,1 @@
+Pipe latency: 1.8122 microseconds

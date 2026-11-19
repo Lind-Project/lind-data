@@ -1,0 +1,1 @@
+Simple open/close: 2.0143 microseconds
