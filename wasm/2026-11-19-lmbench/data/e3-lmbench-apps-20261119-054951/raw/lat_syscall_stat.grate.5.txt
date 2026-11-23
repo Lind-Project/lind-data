@@ -1,0 +1,4 @@
+Simple stat: 1.5997 microseconds
+[testing-grate] result: Ok(
+    0,
+)

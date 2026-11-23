@@ -1,0 +1,1 @@
+Process fork+exit: 49.3186 microseconds

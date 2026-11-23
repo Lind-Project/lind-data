@@ -1,0 +1,32 @@
+lind-perf
+0cb8221ec lind-perf: kill a hung run if it ignores timeout's stop signal (timeout -k 10)
+Running:  /home/lind/lind-wasm/tests/benchmarks/sys_close.c
+Running:  /home/lind/lind-wasm/tests/benchmarks/sys_geteuid.c
+TEST     PARAM  LINUX (ns)  LIND (ns)    GRATE (ns)  ITERATIONS  DESCRIPTION                                              
+-------  -----  ----------  -----------  ----------  ----------  ---------------------------------------------------------
+close    -1     63 (1.000)  58 (0.921)   --          1000000     Evaluate no-op syscall latency using close(-1).          
+geteuid  -      60 (1.000)  131 (2.183)  --          1000000     Evaluate kernel-resolved syscall latency using geteuid().
+Running:  /home/lind/lind-wasm/tests/benchmarks/sys_close.c
+Running:  /home/lind/lind-wasm/tests/benchmarks/sys_geteuid.c
+TEST     PARAM  LINUX (ns)  LIND (ns)    GRATE (ns)  ITERATIONS  DESCRIPTION                                              
+-------  -----  ----------  -----------  ----------  ----------  ---------------------------------------------------------
+close    -1     62 (1.000)  57 (0.919)   --          1000000     Evaluate no-op syscall latency using close(-1).          
+geteuid  -      60 (1.000)  129 (2.150)  --          1000000     Evaluate kernel-resolved syscall latency using geteuid().
+Running:  /home/lind/lind-wasm/tests/benchmarks/sys_close.c
+Running:  /home/lind/lind-wasm/tests/benchmarks/sys_geteuid.c
+TEST     PARAM  LINUX (ns)  LIND (ns)    GRATE (ns)  ITERATIONS  DESCRIPTION                                              
+-------  -----  ----------  -----------  ----------  ----------  ---------------------------------------------------------
+close    -1     62 (1.000)  60 (0.968)   --          1000000     Evaluate no-op syscall latency using close(-1).          
+geteuid  -      62 (1.000)  130 (2.097)  --          1000000     Evaluate kernel-resolved syscall latency using geteuid().
+Running:  /home/lind/lind-wasm/tests/benchmarks/sys_close.c
+Running:  /home/lind/lind-wasm/tests/benchmarks/sys_geteuid.c
+TEST     PARAM  LINUX (ns)  LIND (ns)    GRATE (ns)  ITERATIONS  DESCRIPTION                                              
+-------  -----  ----------  -----------  ----------  ----------  ---------------------------------------------------------
+close    -1     62 (1.000)  60 (0.968)   --          1000000     Evaluate no-op syscall latency using close(-1).          
+geteuid  -      60 (1.000)  131 (2.183)  --          1000000     Evaluate kernel-resolved syscall latency using geteuid().
+Running:  /home/lind/lind-wasm/tests/benchmarks/sys_close.c
+Running:  /home/lind/lind-wasm/tests/benchmarks/sys_geteuid.c
+TEST     PARAM  LINUX (ns)  LIND (ns)    GRATE (ns)  ITERATIONS  DESCRIPTION                                              
+-------  -----  ----------  -----------  ----------  ----------  ---------------------------------------------------------
+close    -1     62 (1.000)  59 (0.952)   --          1000000     Evaluate no-op syscall latency using close(-1).          
+geteuid  -      60 (1.000)  132 (2.200)  --          1000000     Evaluate kernel-resolved syscall latency using geteuid().

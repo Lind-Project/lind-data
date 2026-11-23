@@ -1,0 +1,4 @@
+Simple read: 0.6698 microseconds
+[testing-grate] result: Ok(
+    0,
+)

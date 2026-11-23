@@ -1,0 +1,74 @@
+==================================================
+ stat
+==================================================
+[lind-perf] run 1/12: lind_common::syscall_entry
+Simple stat: 1.1935 microseconds
+[lind-perf] run 2/12: threei::make_syscall
+Simple stat: 1.1843 microseconds
+[lind-perf] run 3/12: threei::make_syscall::dead_cage_check
+Simple stat: 1.1895 microseconds
+[lind-perf] run 4/12: threei::make_syscall::handler_lookup
+Simple stat: 1.1927 microseconds
+[lind-perf] run 5/12: threei::make_syscall::rawposix_dispatch
+Simple stat: 1.1905 microseconds
+[lind-perf] run 6/12: threei::make_syscall::threei_dispatch
+Simple stat: 1.1432 microseconds
+[lind-perf] run 7/12: threei::make_syscall::grate_inflight_enter
+Simple stat: 1.1387 microseconds
+[lind-perf] run 8/12: threei::make_syscall::grate_inflight_exit
+Simple stat: 1.1396 microseconds
+[lind-perf] run 9/12: rawposix::stat
+Simple stat: 1.1896 microseconds
+[lind-perf] run 10/12: rawposix::stat::path
+Simple stat: 1.1926 microseconds
+[lind-perf] run 11/12: rawposix::stat::kernel
+Simple stat: 1.1902 microseconds
+[lind-perf] run 12/12: rawposix::stat::copy_out
+Simple stat: 1.1775 microseconds
+
+scope: all syscalls. Per-layer totals below mix all syscalls and origins; see the PER SYSCALL table for the breakdown.
+
+timer overhead per measurement: 11.0 ns (subtracted in net/call and DERIVED)
+
+---------------------------------------------- LIND_COMMON ----------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+lind_common::syscall_entry                               325252    102.224 ms      314.3 ns      303.3 ns
+
+------------------------------------------------ THREEI -------------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+threei::make_syscall                                     325056     99.022 ms      304.6 ns      293.6 ns
+threei::make_syscall::dead_cage_check                    646824      7.625 ms       11.8 ns        0.8 ns
+threei::make_syscall::handler_lookup                     622044     25.772 ms       41.4 ns       30.4 ns
+threei::make_syscall::rawposix_dispatch                  682711    172.784 ms      253.1 ns      242.1 ns
+
+----------------------------------------------- RAWPOSIX ------------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+rawposix::stat                                            23684     24.065 ms      1.016 us      1.005 us
+rawposix::stat::path                                      23722      4.151 ms      175.0 ns      164.0 ns
+rawposix::stat::kernel                                    23747     19.866 ms      836.6 ns      825.6 ns
+rawposix::stat::copy_out                                  23822    289.515 us       12.2 ns        1.2 ns
+
+-------------------------------------------- PER SYSCALL (net/call; total = time in the syscall entry) ---------------------------------------------
+syscall                    origin      calls       total  share       entry          3i   3i lookup    rawposix     3i call       grate  grate wasm
+----------------------------------------------------------------------------------------------------------------------------------------------------
+clock_gettime (228)        cage       301375   40.129 ms  39.3%    122.2 ns    117.7 ns     30.4 ns     85.0 ns           -           -           -
+select (23)                cage            7   28.886 ms  28.3%    4.127 ms  320.062 us     57.6 ns  619.896 us           -           -           -
+stat (4)                   cage        23822   25.380 ms  24.8%    1.054 us    1.036 us     30.8 ns    1.032 us           -           -           -
+clone (56)                 cage            3    4.175 ms   4.1%    1.392 ms    1.410 ms    101.0 ns    1.369 ms           -           -           -
+exit_group (231)           cage            2    2.280 ms   2.2%    1.140 ms  759.495 us     81.5 ns  758.019 us           -           -           -
+waitpid (61)               cage            1    1.243 ms   1.2%    1.243 ms    1.246 ms     58.0 ns    1.244 ms           -           -           -
+write (1)                  cage            7   83.722 us   0.1%   11.949 us   10.804 us     54.0 ns   10.296 us           -           -           -
+setitimer (38)             cage            2   20.140 us   0.0%   10.059 us   10.024 us     96.5 ns    8.423 us           -           -           -
+pipe (22)                  cage            4   10.239 us   0.0%    2.549 us    2.433 us     48.0 ns    2.216 us           -           -           -
+brk (12)                   cage            3    6.432 us   0.0%    2.133 us    2.139 us    112.3 ns    1.967 us           -           -           -
+close (3)                  cage           12    5.048 us   0.0%    409.7 ns    433.3 ns     54.6 ns    343.0 ns           -           -           -
+read (0)                   cage            6    3.081 us   0.0%    502.5 ns    550.5 ns     65.5 ns    539.8 ns           -           -           -
+sigaction (13)             cage            8    2.644 us   0.0%    319.5 ns    291.9 ns     52.9 ns    242.5 ns           -           -           -
+origin: cage = program's own call, grate = grate's own call, fwd = made by a grate while servicing another call
+
+----------------------------- DERIVED (net/call: outer minus nested timers) -----------------------------
+RawPOSIX stat excl. path, kernel stat, copy-out                                                   14.4 ns
+

@@ -1,0 +1,205 @@
+lind-perf summary: 5 runs; net per call; median [min .. max] spread
+(values converted to ns before comparing; the CSV is in ns, or cycles with --perf=tsc)
+
+====================================================================================================
+ libc_syscall (2001): kernel call
+====================================================================================================
+timer overhead (overhead)                                         11.0 [    11.0 ..     11.0]     0.0 ns
+guest::per_call                                                  128.4 [   127.8 ..    130.5]     2.7 ns
+lind_common::syscall_entry                                        98.4 [    96.7 ..    100.3]     3.6 ns
+threei::make_syscall                                              92.7 [    91.3 ..     95.1]     3.8 ns
+threei::make_syscall::dead_cage_check                              0.8 [     0.8 ..      0.8]     0.0 ns
+threei::make_syscall::handler_lookup                              30.7 [    30.5 ..     31.9]     1.4 ns
+threei::make_syscall::rawposix_dispatch                           62.5 [    61.3 ..     64.0]     2.7 ns
+rawposix::libc_call                                               60.2 [    60.0 ..     61.5]     1.5 ns
+guest side: glibc wrapper + Wasm<->host transition (derived)      29.7 [    28.1 ..     32.9]     4.8 ns
+lind-common: syscall entry glue (excl. 3i) (derived)               5.8 [     2.4 ..      9.0]     6.6 ns
+3i: make_syscall own work, direct path (derived)                  -0.1 [    -5.3 ..      0.1]     5.4 ns
+3i -> RawPOSIX dispatch hop (excl. handler), libc (derived)        1.3 [     0.9 ..      3.9]     3.0 ns
+
+====================================================================================================
+ fdtables_syscall (2002): fdtables, no kernel
+====================================================================================================
+timer overhead (overhead)                                         11.0 [    11.0 ..     11.0]     0.0 ns
+guest::per_call                                                   58.3 [    58.0 ..     60.9]     2.9 ns
+lind_common::syscall_entry                                        37.3 [    37.1 ..     38.5]     1.4 ns
+threei::make_syscall                                              34.8 [    33.4 ..     34.9]     1.5 ns
+threei::make_syscall::dead_cage_check                              0.2 [     0.2 ..      0.2]     0.0 ns
+threei::make_syscall::handler_lookup                              30.5 [    29.2 ..     30.6]     1.4 ns
+threei::make_syscall::rawposix_dispatch                            3.0 [     2.9 ..      3.2]     0.3 ns
+rawposix::fdtables_call                                            1.7 [     1.7 ..      1.9]     0.2 ns
+fdtables::close_virtualfd                                          0.8 [     0.7 ..      0.8]     0.1 ns
+guest side: glibc wrapper + Wasm<->host transition (derived)      21.0 [    19.5 ..     23.7]     4.2 ns
+lind-common: syscall entry glue (excl. 3i) (derived)               2.5 [     2.3 ..      5.1]     2.8 ns
+3i: make_syscall own work, direct path (derived)                   1.1 [    -0.2 ..      2.3]     2.5 ns
+3i -> RawPOSIX dispatch hop (excl. handler), fdtables (deriv       1.3 [     1.1 ..      1.4]     0.3 ns
+RawPOSIX fdtables handler excl. close_virtualfd (derived)          1.0 [     0.9 ..      1.2]     0.3 ns
+
+====================================================================================================
+ null_syscall (2003): Wasm<->host round trip
+====================================================================================================
+timer overhead (overhead)                                         11.0 [    11.0 ..     11.0]     0.0 ns
+guest::per_call                                                   25.9 [    25.7 ..     26.1]     0.4 ns
+lind_common::syscall_entry                                         0.1 [     0.1 ..      0.7]     0.6 ns
+guest side: glibc wrapper + Wasm<->host transition (derived)      25.8 [    25.3 ..     26.0]     0.7 ns
+
+====================================================================================================
+ grate + libc_syscall
+====================================================================================================
+timer overhead (overhead)                                         11.0 [    11.0 ..     11.0]     0.0 ns
+guest::per_call                                                  224.8 [   223.2 ..    225.7]     2.5 ns
+lind_common::syscall_entry                                       199.7 [   197.8 ..    201.2]     3.4 ns
+threei::make_syscall                                             197.4 [   197.1 ..    201.6]     4.5 ns
+threei::make_syscall::dead_cage_check                              0.3 [     0.3 ..      0.3]     0.0 ns
+threei::make_syscall::handler_lookup                              32.6 [    30.6 ..     34.1]     3.5 ns
+threei::make_syscall::grate_inflight_enter                        13.4 [    13.4 ..     13.4]     0.0 ns
+threei::make_syscall::grate_inflight_exit                         13.0 [    12.8 ..     13.2]     0.4 ns
+threei::call_grate_func                                          140.4 [   138.6 ..    142.0]     3.4 ns
+threei::call_grate_func::runtime_lookup                           22.5 [    21.9 ..     24.7]     2.8 ns
+lind_boot::grate_callback_trampoline                             114.0 [   113.3 ..    119.5]     6.2 ns
+lind_boot::grate_callback_trampoline::get_grate_handler           12.0 [    12.0 ..     12.0]     0.0 ns
+lind_3i::submit                                                   95.2 [    93.6 ..     97.0]     3.4 ns
+lind_3i::worker_acquire                                           11.5 [    11.5 ..     11.6]     0.1 ns
+lind_3i::worker_run                                               63.7 [    63.0 ..     65.5]     2.5 ns
+lind_3i::worker_run::reset_stack                                  22.9 [    20.1 ..     23.5]     3.4 ns
+lind_3i::worker_run::pass_fptr_to_wt_call                         44.9 [    44.4 ..     45.1]     0.7 ns
+lind_3i::worker_release                                           11.2 [    11.1 ..     11.5]     0.4 ns
+span::3i_trampoline_call_to_grate_wasm_call                       52.5 [    51.7 ..     53.9]     2.2 ns
+span::grate_wasm_return_to_3i                                     23.8 [    23.5 ..     23.8]     0.3 ns
+guest side: glibc wrapper + Wasm<->host transition (derived)      25.3 [    23.4 ..     27.7]     4.3 ns
+lind-common: syscall entry glue (excl. 3i) (derived)               0.6 [    -1.9 ..      4.0]     5.9 ns
+3i: make_syscall own work, grate path (derived)                   -1.8 [    -3.8 ..      1.7]     5.5 ns
+3i: call_grate_func own work (excl. lookup + trampoline) (de       3.3 [    -1.1 ..      5.2]     6.3 ns
+lind-boot: trampoline own work (excl. lookup + submit) (deri       7.2 [     4.9 ..     13.3]     8.4 ns
+lind-3i: submit bookkeeping (excl. acquire/run/release) (der       8.4 [     7.9 ..      8.9]     1.0 ns
+lind-3i: worker run excl. stack reset and Wasm call (derived      -3.2 [    -4.7 ..     -0.0]     4.7 ns
+
+====================================================================================================
+ grate + fdtables_syscall
+====================================================================================================
+timer overhead (overhead)                                         11.0 [    11.0 ..     11.0]     0.0 ns
+guest::per_call                                                  224.2 [   223.9 ..    231.7]     7.8 ns
+lind_common::syscall_entry                                       199.1 [   197.5 ..    202.3]     4.8 ns
+threei::make_syscall                                             196.3 [   196.2 ..    200.4]     4.2 ns
+threei::make_syscall::dead_cage_check                              0.3 [     0.3 ..      0.3]     0.0 ns
+threei::make_syscall::handler_lookup                              31.1 [    30.7 ..     32.5]     1.8 ns
+threei::make_syscall::grate_inflight_enter                        13.4 [    12.9 ..     13.4]     0.5 ns
+threei::make_syscall::grate_inflight_exit                         12.9 [    12.8 ..     13.4]     0.6 ns
+threei::call_grate_func                                          140.5 [   139.6 ..    141.6]     2.0 ns
+threei::call_grate_func::runtime_lookup                           22.1 [    21.9 ..     22.5]     0.6 ns
+lind_boot::grate_callback_trampoline                             114.9 [   113.3 ..    117.0]     3.7 ns
+lind_boot::grate_callback_trampoline::get_grate_handler           12.0 [    12.0 ..     12.0]     0.0 ns
+lind_3i::submit                                                   95.3 [    94.5 ..     96.6]     2.1 ns
+lind_3i::worker_acquire                                           11.5 [    11.5 ..     11.6]     0.1 ns
+lind_3i::worker_run                                               65.0 [    63.4 ..     65.6]     2.2 ns
+lind_3i::worker_run::reset_stack                                  21.2 [    20.3 ..     23.5]     3.2 ns
+lind_3i::worker_run::pass_fptr_to_wt_call                         44.5 [    44.4 ..     44.9]     0.5 ns
+lind_3i::worker_release                                           11.2 [    11.1 ..     11.4]     0.3 ns
+span::3i_trampoline_call_to_grate_wasm_call                       52.4 [    51.4 ..     53.2]     1.8 ns
+span::grate_wasm_return_to_3i                                     23.9 [    23.7 ..     24.0]     0.3 ns
+guest side: glibc wrapper + Wasm<->host transition (derived)      25.5 [    21.6 ..     34.2]    12.6 ns
+lind-common: syscall entry glue (excl. 3i) (derived)               1.3 [    -2.8 ..      6.0]     8.8 ns
+3i: make_syscall own work, grate path (derived)                   -1.2 [    -2.5 ..      1.1]     3.6 ns
+3i: call_grate_func own work (excl. lookup + trampoline) (de       3.9 [     1.5 ..      4.4]     2.9 ns
+lind-boot: trampoline own work (excl. lookup + submit) (deri       8.0 [     5.6 ..      9.1]     3.5 ns
+lind-3i: submit bookkeeping (excl. acquire/run/release) (der       7.6 [     6.9 ..      9.4]     2.5 ns
+lind-3i: worker run excl. stack reset and Wasm call (derived      -0.7 [    -3.0 ..      0.0]     3.0 ns
+
+====================================================================================================
+ forwarding grate + libc_syscall: cage -> grate -> RawPOSIX -> kernel
+====================================================================================================
+timer overhead (overhead)                                         11.0 [    11.0 ..     11.0]     0.0 ns
+guest::per_call                                                  524.1 [   522.4 ..    530.3]     7.9 ns
+lind_common::syscall_entry                                       320.4 [   318.4 ..    323.5]     5.1 ns
+threei::make_syscall                                             313.2 [   311.8 ..    315.2]     3.4 ns
+threei::make_syscall::dead_cage_check                             15.9 [    15.9 ..     16.1]     0.2 ns
+threei::make_syscall::handler_lookup                              31.5 [    30.9 ..     33.0]     2.1 ns
+threei::make_syscall::rawposix_dispatch                           97.0 [    96.5 ..     97.6]     1.1 ns
+threei::make_syscall::grate_inflight_enter                        14.2 [    14.2 ..     14.3]     0.1 ns
+threei::make_syscall::grate_inflight_exit                         13.2 [    13.2 ..     13.4]     0.2 ns
+threei::call_grate_func                                          394.1 [   387.6 ..    402.5]    14.9 ns
+threei::call_grate_func::runtime_lookup                           23.4 [    22.9 ..     23.5]     0.6 ns
+rawposix::libc_call                                               67.0 [    66.1 ..     67.2]     1.1 ns
+lind_boot::grate_callback_trampoline                             355.6 [   349.0 ..    358.7]     9.7 ns
+lind_boot::grate_callback_trampoline::get_grate_handler           13.1 [    13.0 ..     14.8]     1.8 ns
+lind_3i::submit                                                  322.5 [   321.8 ..    324.1]     2.3 ns
+lind_3i::worker_acquire                                           12.2 [    12.1 ..     12.2]     0.1 ns
+lind_3i::worker_run                                              282.0 [   279.1 ..    283.3]     4.2 ns
+lind_3i::worker_run::reset_stack                                  24.5 [    22.9 ..     26.5]     3.6 ns
+lind_3i::worker_run::pass_fptr_to_wt_call                        265.5 [   263.1 ..    266.2]     3.1 ns
+lind_3i::worker_release                                           11.5 [    11.5 ..     11.5]     0.0 ns
+span::3i_trampoline_call_to_grate_wasm_call                       55.9 [    53.5 ..     56.9]     3.4 ns
+span::grate_wasm_return_to_3i                                     47.7 [    47.5 ..     48.0]     0.5 ns
+bench_libc (2001) [cage] entry (per-syscall)                     483.5 [   480.1 ..    489.6]     9.5 ns
+bench_libc (2001) [cage] 3i (per-syscall)                        473.6 [   470.9 ..    477.4]     6.5 ns
+bench_libc (2001) [cage] 3i lookup (per-syscall)                  32.8 [    31.1 ..     33.3]     2.2 ns
+bench_libc (2001) [cage] grate (per-syscall)                     394.1 [   387.6 ..    402.5]    14.9 ns
+bench_libc (2001) [cage] grate wasm (per-syscall)                265.5 [   263.1 ..    266.2]     3.1 ns
+bench_libc (2001) [fwd] entry (per-syscall)                      156.7 [   155.2 ..    157.9]     2.7 ns
+bench_libc (2001) [fwd] 3i (per-syscall)                         153.0 [   152.6 ..    154.6]     2.0 ns
+bench_libc (2001) [fwd] 3i lookup (per-syscall)                   30.6 [    29.2 ..     32.8]     3.6 ns
+bench_libc (2001) [fwd] rawposix (per-syscall)                    97.0 [    96.5 ..     97.6]     1.1 ns
+
+====================================================================================================
+ forwarding grate + fdtables_syscall: cage -> grate -> RawPOSIX -> fdtables
+====================================================================================================
+timer overhead (overhead)                                         11.0 [    11.0 ..     11.0]     0.0 ns
+guest::per_call                                                  418.2 [   417.1 ..    419.9]     2.8 ns
+lind_common::syscall_entry                                       242.5 [   237.8 ..    242.8]     5.0 ns
+threei::make_syscall                                             236.4 [   232.8 ..    251.0]    18.2 ns
+threei::make_syscall::dead_cage_check                             15.3 [    15.3 ..     15.3]     0.0 ns
+threei::make_syscall::handler_lookup                              31.8 [    31.2 ..     32.6]     1.4 ns
+threei::make_syscall::rawposix_dispatch                           34.0 [    33.9 ..     34.3]     0.4 ns
+threei::make_syscall::grate_inflight_enter                        13.7 [    13.7 ..     13.7]     0.0 ns
+threei::make_syscall::grate_inflight_exit                         12.6 [    12.6 ..     12.7]     0.1 ns
+threei::call_grate_func                                          286.7 [   283.2 ..    287.8]     4.6 ns
+threei::call_grate_func::runtime_lookup                           22.6 [    22.5 ..     24.2]     1.7 ns
+rawposix::fdtables_call                                            1.8 [     1.8 ..      1.8]     0.0 ns
+fdtables::close_virtualfd                                          0.8 [     0.7 ..      0.8]     0.1 ns
+lind_boot::grate_callback_trampoline                             250.7 [   248.1 ..    253.0]     4.9 ns
+lind_boot::grate_callback_trampoline::get_grate_handler           14.6 [    12.9 ..     14.7]     1.8 ns
+lind_3i::submit                                                  220.0 [   217.7 ..    220.1]     2.4 ns
+lind_3i::worker_acquire                                           11.7 [    11.1 ..     12.0]     0.9 ns
+lind_3i::worker_run                                              185.3 [   184.9 ..    187.9]     3.0 ns
+lind_3i::worker_run::reset_stack                                  22.0 [    21.6 ..     24.2]     2.6 ns
+lind_3i::worker_run::pass_fptr_to_wt_call                        167.9 [   166.9 ..    169.8]     2.9 ns
+lind_3i::worker_release                                           10.9 [    10.9 ..     11.2]     0.3 ns
+span::3i_trampoline_call_to_grate_wasm_call                       53.1 [    52.3 ..     57.1]     4.8 ns
+span::grate_wasm_return_to_3i                                     42.5 [    42.3 ..     42.7]     0.4 ns
+bench_fdtables (2002) [cage] entry (per-syscall)                 390.5 [   383.1 ..    391.3]     8.2 ns
+bench_fdtables (2002) [cage] 3i (per-syscall)                    382.6 [   377.3 ..    396.9]    19.6 ns
+bench_fdtables (2002) [cage] 3i lookup (per-syscall)              31.1 [    30.8 ..     32.5]     1.7 ns
+bench_fdtables (2002) [cage] grate (per-syscall)                 286.7 [   283.2 ..    287.8]     4.6 ns
+bench_fdtables (2002) [cage] grate wasm (per-syscall)            167.9 [   166.9 ..    169.8]     2.9 ns
+bench_fdtables (2002) [fwd] entry (per-syscall)                   93.7 [    92.4 ..     95.1]     2.7 ns
+bench_fdtables (2002) [fwd] 3i (per-syscall)                      90.1 [    87.4 ..    105.1]    17.7 ns
+bench_fdtables (2002) [fwd] 3i lookup (per-syscall)               32.6 [    31.4 ..     32.9]     1.5 ns
+bench_fdtables (2002) [fwd] rawposix (per-syscall)                34.0 [    33.9 ..     34.3]     0.4 ns
+
+====================================================================================================
+ fork_wait: fork() + waitpid()
+====================================================================================================
+timer overhead (overhead)                                         11.0 [    11.0 ..     11.0]     0.0 ns
+guest::per_call                                                  9.034 [   8.923 ..    9.243]   0.320 ms
+fork::parent_setup                                             460.534 [ 452.077 ..  465.121]  13.044 us
+fork::parent_setup::snapshots                                  393.352 [ 385.982 ..  397.355]  11.373 us
+fork::parent_unwind                                             91.955 [  90.743 ..   97.591]   6.848 us
+fork::parent_callback                                            4.389 [   3.941 ..    4.448]   0.507 ms
+fork::parent_callback::thread_spawn                             14.493 [  13.806 ..   27.151]  13.345 us
+fork::parent_callback::wait_for_child                            4.219 [   4.146 ..    4.315]   0.169 ms
+fork::parent_rewind                                            745.875 [ 743.411 ..  749.499]   6.088 us
+fork::child_setup                                                2.584 [   2.572 ..    2.599]   0.027 ms
+fork::child_setup::new_store                                    66.743 [  66.545 ..   66.874]   0.329 us
+fork::child_setup::new_child_linker                             20.951 [  20.269 ..   21.043]   0.774 us
+fork::child_setup::instantiate                                   1.060 [   1.053 ..    1.064]   0.011 ms
+fork::child_setup::instantiate::copy_memory                      1.044 [   1.041 ..    1.050]   0.009 ms
+fork::child_rewind_to_exit                                       3.132 [   3.009 ..    3.263]   0.254 ms
+exit::exit_call                                                  1.441 [   1.405 ..    1.469]   0.064 us
+exit::unwind                                                    89.255 [  82.906 ..  104.352]  21.446 us
+exit::cleanup                                                  755.409 [ 695.116 ..  771.274]  76.158 us
+exit::cleanup::cage_finalize                                   668.901 [ 599.185 ..  731.541] 132.356 us
+fork: parent setup excl. snapshots (derived)                    67.766 [  58.193 ..   76.924]  18.731 us
+fork: parent callback excl. thread spawn and waiting (derive    54.736 [-329.852 ..  201.931] 531.783 us
+fork: child setup excl. store, linker, instantiate (derived)     1.439 [   1.424 ..    1.450]   0.026 ms
+fork: instantiate excl. copying memory (derived)                13.928 [   8.762 ..   22.884]  14.122 us
+exit: cleanup excl. cage_finalize (derived)                     63.454 [  23.868 ..  163.436] 139.568 us

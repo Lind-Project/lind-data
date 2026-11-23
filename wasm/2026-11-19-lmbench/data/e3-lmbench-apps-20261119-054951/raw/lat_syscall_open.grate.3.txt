@@ -1,0 +1,4 @@
+Simple open/close: 3.1107 microseconds
+[testing-grate] result: Ok(
+    0,
+)

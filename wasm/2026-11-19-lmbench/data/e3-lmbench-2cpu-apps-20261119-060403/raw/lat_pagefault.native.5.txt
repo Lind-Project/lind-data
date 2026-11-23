@@ -1,0 +1,1 @@
+Pagefaults on /tmp/lindperf-apps/sample.bin: 0.0996 microseconds

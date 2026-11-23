@@ -1,0 +1,4 @@
+Pagefaults on /tmp/lindperf-apps/sample.bin: 0.0987 microseconds
+[testing-grate] result: Ok(
+    0,
+)

@@ -1,0 +1,172 @@
+benchmark,name,kind,unit,runs,median,min,max
+libc_syscall (2001): kernel call,timer overhead,overhead,ns,5,11.0,11.0,11.0
+libc_syscall (2001): kernel call,guest::per_call,counter,ns,5,128.4,127.8,130.5
+libc_syscall (2001): kernel call,lind_common::syscall_entry,counter,ns,5,98.4,96.7,100.3
+libc_syscall (2001): kernel call,threei::make_syscall,counter,ns,5,92.7,91.3,95.1
+libc_syscall (2001): kernel call,threei::make_syscall::dead_cage_check,counter,ns,5,0.8,0.8,0.8
+libc_syscall (2001): kernel call,threei::make_syscall::handler_lookup,counter,ns,5,30.7,30.5,31.9
+libc_syscall (2001): kernel call,threei::make_syscall::rawposix_dispatch,counter,ns,5,62.5,61.3,64.0
+libc_syscall (2001): kernel call,rawposix::libc_call,counter,ns,5,60.2,60.0,61.5
+libc_syscall (2001): kernel call,guest side: glibc wrapper + Wasm<->host transition,derived,ns,5,29.7,28.1,32.9
+libc_syscall (2001): kernel call,lind-common: syscall entry glue (excl. 3i),derived,ns,5,5.8,2.4,9.0
+libc_syscall (2001): kernel call,"3i: make_syscall own work, direct path",derived,ns,5,-0.1,-5.3,0.1
+libc_syscall (2001): kernel call,"3i -> RawPOSIX dispatch hop (excl. handler), libc",derived,ns,5,1.3,0.9,3.9
+"fdtables_syscall (2002): fdtables, no kernel",timer overhead,overhead,ns,5,11.0,11.0,11.0
+"fdtables_syscall (2002): fdtables, no kernel",guest::per_call,counter,ns,5,58.3,58.0,60.9
+"fdtables_syscall (2002): fdtables, no kernel",lind_common::syscall_entry,counter,ns,5,37.3,37.1,38.5
+"fdtables_syscall (2002): fdtables, no kernel",threei::make_syscall,counter,ns,5,34.8,33.4,34.9
+"fdtables_syscall (2002): fdtables, no kernel",threei::make_syscall::dead_cage_check,counter,ns,5,0.2,0.2,0.2
+"fdtables_syscall (2002): fdtables, no kernel",threei::make_syscall::handler_lookup,counter,ns,5,30.5,29.2,30.6
+"fdtables_syscall (2002): fdtables, no kernel",threei::make_syscall::rawposix_dispatch,counter,ns,5,3.0,2.9,3.2
+"fdtables_syscall (2002): fdtables, no kernel",rawposix::fdtables_call,counter,ns,5,1.7,1.7,1.9
+"fdtables_syscall (2002): fdtables, no kernel",fdtables::close_virtualfd,counter,ns,5,0.8,0.7,0.8
+"fdtables_syscall (2002): fdtables, no kernel",guest side: glibc wrapper + Wasm<->host transition,derived,ns,5,21.0,19.5,23.7
+"fdtables_syscall (2002): fdtables, no kernel",lind-common: syscall entry glue (excl. 3i),derived,ns,5,2.5,2.3,5.1
+"fdtables_syscall (2002): fdtables, no kernel","3i: make_syscall own work, direct path",derived,ns,5,1.1,-0.2,2.3
+"fdtables_syscall (2002): fdtables, no kernel","3i -> RawPOSIX dispatch hop (excl. handler), fdtables",derived,ns,5,1.3,1.1,1.4
+"fdtables_syscall (2002): fdtables, no kernel",RawPOSIX fdtables handler excl. close_virtualfd,derived,ns,5,1.0,0.9,1.2
+null_syscall (2003): Wasm<->host round trip,timer overhead,overhead,ns,5,11.0,11.0,11.0
+null_syscall (2003): Wasm<->host round trip,guest::per_call,counter,ns,5,25.9,25.7,26.1
+null_syscall (2003): Wasm<->host round trip,lind_common::syscall_entry,counter,ns,5,0.1,0.1,0.7
+null_syscall (2003): Wasm<->host round trip,guest side: glibc wrapper + Wasm<->host transition,derived,ns,5,25.8,25.3,26.0
+grate + libc_syscall,timer overhead,overhead,ns,5,11.0,11.0,11.0
+grate + libc_syscall,guest::per_call,counter,ns,5,224.8,223.2,225.7
+grate + libc_syscall,lind_common::syscall_entry,counter,ns,5,199.7,197.8,201.2
+grate + libc_syscall,threei::make_syscall,counter,ns,5,197.4,197.1,201.6
+grate + libc_syscall,threei::make_syscall::dead_cage_check,counter,ns,5,0.3,0.3,0.3
+grate + libc_syscall,threei::make_syscall::handler_lookup,counter,ns,5,32.6,30.6,34.1
+grate + libc_syscall,threei::make_syscall::grate_inflight_enter,counter,ns,5,13.4,13.4,13.4
+grate + libc_syscall,threei::make_syscall::grate_inflight_exit,counter,ns,5,13.0,12.8,13.2
+grate + libc_syscall,threei::call_grate_func,counter,ns,5,140.4,138.6,142.0
+grate + libc_syscall,threei::call_grate_func::runtime_lookup,counter,ns,5,22.5,21.9,24.7
+grate + libc_syscall,lind_boot::grate_callback_trampoline,counter,ns,5,114.0,113.3,119.5
+grate + libc_syscall,lind_boot::grate_callback_trampoline::get_grate_handler,counter,ns,5,12.0,12.0,12.0
+grate + libc_syscall,lind_3i::submit,counter,ns,5,95.2,93.6,97.0
+grate + libc_syscall,lind_3i::worker_acquire,counter,ns,5,11.5,11.5,11.6
+grate + libc_syscall,lind_3i::worker_run,counter,ns,5,63.7,63.0,65.5
+grate + libc_syscall,lind_3i::worker_run::reset_stack,counter,ns,5,22.9,20.1,23.5
+grate + libc_syscall,lind_3i::worker_run::pass_fptr_to_wt_call,counter,ns,5,44.9,44.4,45.1
+grate + libc_syscall,lind_3i::worker_release,counter,ns,5,11.2,11.1,11.5
+grate + libc_syscall,span::3i_trampoline_call_to_grate_wasm_call,counter,ns,5,52.5,51.7,53.9
+grate + libc_syscall,span::grate_wasm_return_to_3i,counter,ns,5,23.8,23.5,23.8
+grate + libc_syscall,guest side: glibc wrapper + Wasm<->host transition,derived,ns,5,25.3,23.4,27.7
+grate + libc_syscall,lind-common: syscall entry glue (excl. 3i),derived,ns,5,0.6,-1.9,4.0
+grate + libc_syscall,"3i: make_syscall own work, grate path",derived,ns,5,-1.8,-3.8,1.7
+grate + libc_syscall,3i: call_grate_func own work (excl. lookup + trampoline),derived,ns,5,3.3,-1.1,5.2
+grate + libc_syscall,lind-boot: trampoline own work (excl. lookup + submit),derived,ns,5,7.2,4.9,13.3
+grate + libc_syscall,lind-3i: submit bookkeeping (excl. acquire/run/release),derived,ns,5,8.4,7.9,8.9
+grate + libc_syscall,lind-3i: worker run excl. stack reset and Wasm call,derived,ns,5,-3.2,-4.7,-0.0
+grate + fdtables_syscall,timer overhead,overhead,ns,5,11.0,11.0,11.0
+grate + fdtables_syscall,guest::per_call,counter,ns,5,224.2,223.9,231.7
+grate + fdtables_syscall,lind_common::syscall_entry,counter,ns,5,199.1,197.5,202.3
+grate + fdtables_syscall,threei::make_syscall,counter,ns,5,196.3,196.2,200.4
+grate + fdtables_syscall,threei::make_syscall::dead_cage_check,counter,ns,5,0.3,0.3,0.3
+grate + fdtables_syscall,threei::make_syscall::handler_lookup,counter,ns,5,31.1,30.7,32.5
+grate + fdtables_syscall,threei::make_syscall::grate_inflight_enter,counter,ns,5,13.4,12.9,13.4
+grate + fdtables_syscall,threei::make_syscall::grate_inflight_exit,counter,ns,5,12.9,12.8,13.4
+grate + fdtables_syscall,threei::call_grate_func,counter,ns,5,140.5,139.6,141.6
+grate + fdtables_syscall,threei::call_grate_func::runtime_lookup,counter,ns,5,22.1,21.9,22.5
+grate + fdtables_syscall,lind_boot::grate_callback_trampoline,counter,ns,5,114.9,113.3,117.0
+grate + fdtables_syscall,lind_boot::grate_callback_trampoline::get_grate_handler,counter,ns,5,12.0,12.0,12.0
+grate + fdtables_syscall,lind_3i::submit,counter,ns,5,95.3,94.5,96.6
+grate + fdtables_syscall,lind_3i::worker_acquire,counter,ns,5,11.5,11.5,11.6
+grate + fdtables_syscall,lind_3i::worker_run,counter,ns,5,65.0,63.4,65.6
+grate + fdtables_syscall,lind_3i::worker_run::reset_stack,counter,ns,5,21.2,20.3,23.5
+grate + fdtables_syscall,lind_3i::worker_run::pass_fptr_to_wt_call,counter,ns,5,44.5,44.4,44.9
+grate + fdtables_syscall,lind_3i::worker_release,counter,ns,5,11.2,11.1,11.4
+grate + fdtables_syscall,span::3i_trampoline_call_to_grate_wasm_call,counter,ns,5,52.4,51.4,53.2
+grate + fdtables_syscall,span::grate_wasm_return_to_3i,counter,ns,5,23.9,23.7,24.0
+grate + fdtables_syscall,guest side: glibc wrapper + Wasm<->host transition,derived,ns,5,25.5,21.6,34.2
+grate + fdtables_syscall,lind-common: syscall entry glue (excl. 3i),derived,ns,5,1.3,-2.8,6.0
+grate + fdtables_syscall,"3i: make_syscall own work, grate path",derived,ns,5,-1.2,-2.5,1.1
+grate + fdtables_syscall,3i: call_grate_func own work (excl. lookup + trampoline),derived,ns,5,3.9,1.5,4.4
+grate + fdtables_syscall,lind-boot: trampoline own work (excl. lookup + submit),derived,ns,5,8.0,5.6,9.1
+grate + fdtables_syscall,lind-3i: submit bookkeeping (excl. acquire/run/release),derived,ns,5,7.6,6.9,9.4
+grate + fdtables_syscall,lind-3i: worker run excl. stack reset and Wasm call,derived,ns,5,-0.7,-3.0,0.0
+forwarding grate + libc_syscall: cage -> grate -> RawPOSIX -> kernel,timer overhead,overhead,ns,5,11.0,11.0,11.0
+forwarding grate + libc_syscall: cage -> grate -> RawPOSIX -> kernel,guest::per_call,counter,ns,5,524.1,522.4,530.3
+forwarding grate + libc_syscall: cage -> grate -> RawPOSIX -> kernel,lind_common::syscall_entry,counter,ns,5,320.4,318.4,323.5
+forwarding grate + libc_syscall: cage -> grate -> RawPOSIX -> kernel,threei::make_syscall,counter,ns,5,313.2,311.8,315.2
+forwarding grate + libc_syscall: cage -> grate -> RawPOSIX -> kernel,threei::make_syscall::dead_cage_check,counter,ns,5,15.9,15.9,16.1
+forwarding grate + libc_syscall: cage -> grate -> RawPOSIX -> kernel,threei::make_syscall::handler_lookup,counter,ns,5,31.5,30.9,33.0
+forwarding grate + libc_syscall: cage -> grate -> RawPOSIX -> kernel,threei::make_syscall::rawposix_dispatch,counter,ns,5,97.0,96.5,97.6
+forwarding grate + libc_syscall: cage -> grate -> RawPOSIX -> kernel,threei::make_syscall::grate_inflight_enter,counter,ns,5,14.2,14.2,14.3
+forwarding grate + libc_syscall: cage -> grate -> RawPOSIX -> kernel,threei::make_syscall::grate_inflight_exit,counter,ns,5,13.2,13.2,13.4
+forwarding grate + libc_syscall: cage -> grate -> RawPOSIX -> kernel,threei::call_grate_func,counter,ns,5,394.1,387.6,402.5
+forwarding grate + libc_syscall: cage -> grate -> RawPOSIX -> kernel,threei::call_grate_func::runtime_lookup,counter,ns,5,23.4,22.9,23.5
+forwarding grate + libc_syscall: cage -> grate -> RawPOSIX -> kernel,rawposix::libc_call,counter,ns,5,67.0,66.1,67.2
+forwarding grate + libc_syscall: cage -> grate -> RawPOSIX -> kernel,lind_boot::grate_callback_trampoline,counter,ns,5,355.6,349.0,358.7
+forwarding grate + libc_syscall: cage -> grate -> RawPOSIX -> kernel,lind_boot::grate_callback_trampoline::get_grate_handler,counter,ns,5,13.1,13.0,14.8
+forwarding grate + libc_syscall: cage -> grate -> RawPOSIX -> kernel,lind_3i::submit,counter,ns,5,322.5,321.8,324.1
+forwarding grate + libc_syscall: cage -> grate -> RawPOSIX -> kernel,lind_3i::worker_acquire,counter,ns,5,12.2,12.1,12.2
+forwarding grate + libc_syscall: cage -> grate -> RawPOSIX -> kernel,lind_3i::worker_run,counter,ns,5,282.0,279.1,283.3
+forwarding grate + libc_syscall: cage -> grate -> RawPOSIX -> kernel,lind_3i::worker_run::reset_stack,counter,ns,5,24.5,22.9,26.5
+forwarding grate + libc_syscall: cage -> grate -> RawPOSIX -> kernel,lind_3i::worker_run::pass_fptr_to_wt_call,counter,ns,5,265.5,263.1,266.2
+forwarding grate + libc_syscall: cage -> grate -> RawPOSIX -> kernel,lind_3i::worker_release,counter,ns,5,11.5,11.5,11.5
+forwarding grate + libc_syscall: cage -> grate -> RawPOSIX -> kernel,span::3i_trampoline_call_to_grate_wasm_call,counter,ns,5,55.9,53.5,56.9
+forwarding grate + libc_syscall: cage -> grate -> RawPOSIX -> kernel,span::grate_wasm_return_to_3i,counter,ns,5,47.7,47.5,48.0
+forwarding grate + libc_syscall: cage -> grate -> RawPOSIX -> kernel,bench_libc (2001) [cage] entry,per-syscall,ns,5,483.5,480.1,489.6
+forwarding grate + libc_syscall: cage -> grate -> RawPOSIX -> kernel,bench_libc (2001) [cage] 3i,per-syscall,ns,5,473.6,470.9,477.4
+forwarding grate + libc_syscall: cage -> grate -> RawPOSIX -> kernel,bench_libc (2001) [cage] 3i lookup,per-syscall,ns,5,32.8,31.1,33.3
+forwarding grate + libc_syscall: cage -> grate -> RawPOSIX -> kernel,bench_libc (2001) [cage] grate,per-syscall,ns,5,394.1,387.6,402.5
+forwarding grate + libc_syscall: cage -> grate -> RawPOSIX -> kernel,bench_libc (2001) [cage] grate wasm,per-syscall,ns,5,265.5,263.1,266.2
+forwarding grate + libc_syscall: cage -> grate -> RawPOSIX -> kernel,bench_libc (2001) [fwd] entry,per-syscall,ns,5,156.7,155.2,157.9
+forwarding grate + libc_syscall: cage -> grate -> RawPOSIX -> kernel,bench_libc (2001) [fwd] 3i,per-syscall,ns,5,153.0,152.6,154.6
+forwarding grate + libc_syscall: cage -> grate -> RawPOSIX -> kernel,bench_libc (2001) [fwd] 3i lookup,per-syscall,ns,5,30.6,29.2,32.8
+forwarding grate + libc_syscall: cage -> grate -> RawPOSIX -> kernel,bench_libc (2001) [fwd] rawposix,per-syscall,ns,5,97.0,96.5,97.6
+forwarding grate + fdtables_syscall: cage -> grate -> RawPOSIX -> fdtables,timer overhead,overhead,ns,5,11.0,11.0,11.0
+forwarding grate + fdtables_syscall: cage -> grate -> RawPOSIX -> fdtables,guest::per_call,counter,ns,5,418.2,417.1,419.9
+forwarding grate + fdtables_syscall: cage -> grate -> RawPOSIX -> fdtables,lind_common::syscall_entry,counter,ns,5,242.5,237.8,242.8
+forwarding grate + fdtables_syscall: cage -> grate -> RawPOSIX -> fdtables,threei::make_syscall,counter,ns,5,236.4,232.8,251.0
+forwarding grate + fdtables_syscall: cage -> grate -> RawPOSIX -> fdtables,threei::make_syscall::dead_cage_check,counter,ns,5,15.3,15.3,15.3
+forwarding grate + fdtables_syscall: cage -> grate -> RawPOSIX -> fdtables,threei::make_syscall::handler_lookup,counter,ns,5,31.8,31.2,32.6
+forwarding grate + fdtables_syscall: cage -> grate -> RawPOSIX -> fdtables,threei::make_syscall::rawposix_dispatch,counter,ns,5,34.0,33.9,34.3
+forwarding grate + fdtables_syscall: cage -> grate -> RawPOSIX -> fdtables,threei::make_syscall::grate_inflight_enter,counter,ns,5,13.7,13.7,13.7
+forwarding grate + fdtables_syscall: cage -> grate -> RawPOSIX -> fdtables,threei::make_syscall::grate_inflight_exit,counter,ns,5,12.6,12.6,12.7
+forwarding grate + fdtables_syscall: cage -> grate -> RawPOSIX -> fdtables,threei::call_grate_func,counter,ns,5,286.7,283.2,287.8
+forwarding grate + fdtables_syscall: cage -> grate -> RawPOSIX -> fdtables,threei::call_grate_func::runtime_lookup,counter,ns,5,22.6,22.5,24.2
+forwarding grate + fdtables_syscall: cage -> grate -> RawPOSIX -> fdtables,rawposix::fdtables_call,counter,ns,5,1.8,1.8,1.8
+forwarding grate + fdtables_syscall: cage -> grate -> RawPOSIX -> fdtables,fdtables::close_virtualfd,counter,ns,5,0.8,0.7,0.8
+forwarding grate + fdtables_syscall: cage -> grate -> RawPOSIX -> fdtables,lind_boot::grate_callback_trampoline,counter,ns,5,250.7,248.1,253.0
+forwarding grate + fdtables_syscall: cage -> grate -> RawPOSIX -> fdtables,lind_boot::grate_callback_trampoline::get_grate_handler,counter,ns,5,14.6,12.9,14.7
+forwarding grate + fdtables_syscall: cage -> grate -> RawPOSIX -> fdtables,lind_3i::submit,counter,ns,5,220.0,217.7,220.1
+forwarding grate + fdtables_syscall: cage -> grate -> RawPOSIX -> fdtables,lind_3i::worker_acquire,counter,ns,5,11.7,11.1,12.0
+forwarding grate + fdtables_syscall: cage -> grate -> RawPOSIX -> fdtables,lind_3i::worker_run,counter,ns,5,185.3,184.9,187.9
+forwarding grate + fdtables_syscall: cage -> grate -> RawPOSIX -> fdtables,lind_3i::worker_run::reset_stack,counter,ns,5,22.0,21.6,24.2
+forwarding grate + fdtables_syscall: cage -> grate -> RawPOSIX -> fdtables,lind_3i::worker_run::pass_fptr_to_wt_call,counter,ns,5,167.9,166.9,169.8
+forwarding grate + fdtables_syscall: cage -> grate -> RawPOSIX -> fdtables,lind_3i::worker_release,counter,ns,5,10.9,10.9,11.2
+forwarding grate + fdtables_syscall: cage -> grate -> RawPOSIX -> fdtables,span::3i_trampoline_call_to_grate_wasm_call,counter,ns,5,53.1,52.3,57.1
+forwarding grate + fdtables_syscall: cage -> grate -> RawPOSIX -> fdtables,span::grate_wasm_return_to_3i,counter,ns,5,42.5,42.3,42.7
+forwarding grate + fdtables_syscall: cage -> grate -> RawPOSIX -> fdtables,bench_fdtables (2002) [cage] entry,per-syscall,ns,5,390.5,383.1,391.3
+forwarding grate + fdtables_syscall: cage -> grate -> RawPOSIX -> fdtables,bench_fdtables (2002) [cage] 3i,per-syscall,ns,5,382.6,377.3,396.9
+forwarding grate + fdtables_syscall: cage -> grate -> RawPOSIX -> fdtables,bench_fdtables (2002) [cage] 3i lookup,per-syscall,ns,5,31.1,30.8,32.5
+forwarding grate + fdtables_syscall: cage -> grate -> RawPOSIX -> fdtables,bench_fdtables (2002) [cage] grate,per-syscall,ns,5,286.7,283.2,287.8
+forwarding grate + fdtables_syscall: cage -> grate -> RawPOSIX -> fdtables,bench_fdtables (2002) [cage] grate wasm,per-syscall,ns,5,167.9,166.9,169.8
+forwarding grate + fdtables_syscall: cage -> grate -> RawPOSIX -> fdtables,bench_fdtables (2002) [fwd] entry,per-syscall,ns,5,93.7,92.4,95.1
+forwarding grate + fdtables_syscall: cage -> grate -> RawPOSIX -> fdtables,bench_fdtables (2002) [fwd] 3i,per-syscall,ns,5,90.1,87.4,105.1
+forwarding grate + fdtables_syscall: cage -> grate -> RawPOSIX -> fdtables,bench_fdtables (2002) [fwd] 3i lookup,per-syscall,ns,5,32.6,31.4,32.9
+forwarding grate + fdtables_syscall: cage -> grate -> RawPOSIX -> fdtables,bench_fdtables (2002) [fwd] rawposix,per-syscall,ns,5,34.0,33.9,34.3
+fork_wait: fork() + waitpid(),timer overhead,overhead,ns,5,11.0,11.0,11.0
+fork_wait: fork() + waitpid(),guest::per_call,counter,ms,5,9.0,8.9,9.2
+fork_wait: fork() + waitpid(),fork::parent_setup,counter,us,5,460.5,452.1,465.1
+fork_wait: fork() + waitpid(),fork::parent_setup::snapshots,counter,us,5,393.4,386.0,397.4
+fork_wait: fork() + waitpid(),fork::parent_unwind,counter,us,5,92.0,90.7,97.6
+fork_wait: fork() + waitpid(),fork::parent_callback,counter,ms,5,4.4,3.9,4.4
+fork_wait: fork() + waitpid(),fork::parent_callback::thread_spawn,counter,us,5,14.5,13.8,27.2
+fork_wait: fork() + waitpid(),fork::parent_callback::wait_for_child,counter,ms,5,4.2,4.1,4.3
+fork_wait: fork() + waitpid(),fork::parent_rewind,counter,us,5,745.9,743.4,749.5
+fork_wait: fork() + waitpid(),fork::child_setup,counter,ms,5,2.6,2.6,2.6
+fork_wait: fork() + waitpid(),fork::child_setup::new_store,counter,us,5,66.7,66.5,66.9
+fork_wait: fork() + waitpid(),fork::child_setup::new_child_linker,counter,us,5,21.0,20.3,21.0
+fork_wait: fork() + waitpid(),fork::child_setup::instantiate,counter,ms,5,1.1,1.1,1.1
+fork_wait: fork() + waitpid(),fork::child_setup::instantiate::copy_memory,counter,ms,5,1.0,1.0,1.1
+fork_wait: fork() + waitpid(),fork::child_rewind_to_exit,counter,ms,5,3.1,3.0,3.3
+fork_wait: fork() + waitpid(),exit::exit_call,counter,us,5,1.4,1.4,1.5
+fork_wait: fork() + waitpid(),exit::unwind,counter,us,5,89.3,82.9,104.4
+fork_wait: fork() + waitpid(),exit::cleanup,counter,us,5,755.4,695.1,771.3
+fork_wait: fork() + waitpid(),exit::cleanup::cage_finalize,counter,us,5,668.9,599.2,731.5
+fork_wait: fork() + waitpid(),fork: parent setup excl. snapshots,derived,us,5,67.8,58.2,76.9
+fork_wait: fork() + waitpid(),fork: parent callback excl. thread spawn and waiting,derived,us,5,54.7,-329.9,201.9
+fork_wait: fork() + waitpid(),"fork: child setup excl. store, linker, instantiate",derived,ms,5,1.4,1.4,1.4
+fork_wait: fork() + waitpid(),fork: instantiate excl. copying memory,derived,us,5,13.9,8.8,22.9
+fork_wait: fork() + waitpid(),exit: cleanup excl. cage_finalize,derived,us,5,63.5,23.9,163.4

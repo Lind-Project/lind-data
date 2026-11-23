@@ -1,0 +1,4 @@
+Simple syscall: 0.4275 microseconds
+[testing-grate] result: Ok(
+    0,
+)

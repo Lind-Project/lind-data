@@ -1,0 +1,609 @@
+Compiling benchmarks into lindfs/lind-perf/ ...
+wasm-ld: warning: creating PIEs, with -pie, is not yet stable
+wasm-ld: warning: function signature mismatch: main
+>>> defined as (i32, i32, i32) -> i32 in /home/lind/lind-wasm/build/sysroot/lib/wasm32-wasi/crt1_shared.o
+>>> defined as (i32, i32) -> i32 in /tmp/libc_syscall-51496c.o
+OK: /home/lind/lind-wasm/tests/benchmarks/lind-perf/libc_syscall.cwasm
+wasm-ld: warning: creating PIEs, with -pie, is not yet stable
+wasm-ld: warning: function signature mismatch: main
+>>> defined as (i32, i32, i32) -> i32 in /home/lind/lind-wasm/build/sysroot/lib/wasm32-wasi/crt1_shared.o
+>>> defined as (i32, i32) -> i32 in /tmp/fdtables_syscall-2e51c8.o
+OK: /home/lind/lind-wasm/tests/benchmarks/lind-perf/fdtables_syscall.cwasm
+wasm-ld: warning: creating PIEs, with -pie, is not yet stable
+wasm-ld: warning: function signature mismatch: main
+>>> defined as (i32, i32, i32) -> i32 in /home/lind/lind-wasm/build/sysroot/lib/wasm32-wasi/crt1_shared.o
+>>> defined as (i32, i32) -> i32 in /tmp/null_syscall-fe3884.o
+OK: /home/lind/lind-wasm/tests/benchmarks/lind-perf/null_syscall.cwasm
+wasm-ld: warning: creating PIEs, with -pie, is not yet stable
+wasm-ld: warning: function signature mismatch: main
+>>> defined as (i32, i32, i32) -> i32 in /home/lind/lind-wasm/build/sysroot/lib/wasm32-wasi/crt1_shared.o
+>>> defined as (i32, i32) -> i32 in /tmp/fork_wait-d6395b.o
+OK: /home/lind/lind-wasm/tests/benchmarks/lind-perf/fork_wait.cwasm
+OK: /home/lind/lind-wasm/tests/benchmarks/lind-perf/grate_syscall.cwasm
+OK: /home/lind/lind-wasm/tests/benchmarks/lind-perf/grate_forward.cwasm
+
+==================================================================================================
+ libc_syscall (2001): kernel call
+==================================================================================================
+[lind-perf] run 1/25: guest::per_call
+[lind-perf] run 2/25: lind_common::syscall_entry
+[lind-perf] run 3/25: threei::make_syscall
+[lind-perf] run 4/25: threei::make_syscall::dead_cage_check
+[lind-perf] run 5/25: threei::make_syscall::handler_lookup
+[lind-perf] run 6/25: threei::make_syscall::rawposix_dispatch
+[lind-perf] run 7/25: threei::make_syscall::threei_dispatch
+[lind-perf] run 8/25: threei::copy_data_between_cages
+[lind-perf] run 9/25: threei::make_syscall::grate_inflight_enter
+[lind-perf] run 10/25: threei::make_syscall::grate_inflight_exit
+[lind-perf] run 11/25: threei::call_grate_func
+[lind-perf] run 12/25: threei::call_grate_func::runtime_lookup
+[lind-perf] run 13/25: rawposix::libc_call
+[lind-perf] run 14/25: rawposix::fdtables_call
+[lind-perf] run 15/25: fdtables::close_virtualfd
+[lind-perf] run 16/25: lind_boot::grate_callback_trampoline
+[lind-perf] run 17/25: lind_boot::grate_callback_trampoline::get_grate_handler
+[lind-perf] run 18/25: lind_3i::submit
+[lind-perf] run 19/25: lind_3i::worker_acquire
+[lind-perf] run 20/25: lind_3i::worker_run
+[lind-perf] run 21/25: lind_3i::worker_run::reset_stack
+[lind-perf] run 22/25: lind_3i::worker_run::pass_fptr_to_wt_call
+[lind-perf] run 23/25: lind_3i::worker_release
+[lind-perf] run 24/25: span::3i_trampoline_call_to_grate_wasm_call
+[lind-perf] run 25/25: span::grate_wasm_return_to_3i
+
+timer overhead per measurement: 11.0 ns (subtracted in net/call and DERIVED)
+
+------------------------------------------------- GUEST -------------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+guest::per_call                                         1000000    129.447 ms      129.4 ns      129.4 ns
+
+---------------------------------------------- LIND_COMMON ----------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+lind_common::syscall_entry                              1001000    107.822 ms      107.7 ns       96.7 ns
+
+------------------------------------------------ THREEI -------------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+threei::make_syscall                                    1001000    104.060 ms      104.0 ns       93.0 ns
+threei::make_syscall::dead_cage_check                   1001000     11.806 ms       11.8 ns        0.8 ns
+threei::make_syscall::handler_lookup                    1001000     41.762 ms       41.7 ns       30.7 ns
+threei::make_syscall::rawposix_dispatch                 1001000     72.575 ms       72.5 ns       61.5 ns
+
+----------------------------------------------- RAWPOSIX ------------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+rawposix::libc_call                                     1001000     71.240 ms       71.2 ns       60.2 ns
+
+----------------------------- DERIVED (net/call: outer minus nested timers) -----------------------------
+guest side: glibc wrapper + Wasm<->host transition                                                32.7 ns
+lind-common: syscall entry glue (excl. 3i)                                                         3.8 ns
+3i: make_syscall own work, direct path                                                            -0.1 ns
+3i -> RawPOSIX dispatch hop (excl. handler), libc                                                  1.3 ns
+
+
+==================================================================================================
+ fdtables_syscall (2002): fdtables, no kernel
+==================================================================================================
+[lind-perf] run 1/25: guest::per_call
+[lind-perf] run 2/25: lind_common::syscall_entry
+[lind-perf] run 3/25: threei::make_syscall
+[lind-perf] run 4/25: threei::make_syscall::dead_cage_check
+[lind-perf] run 5/25: threei::make_syscall::handler_lookup
+[lind-perf] run 6/25: threei::make_syscall::rawposix_dispatch
+[lind-perf] run 7/25: threei::make_syscall::threei_dispatch
+[lind-perf] run 8/25: threei::copy_data_between_cages
+[lind-perf] run 9/25: threei::make_syscall::grate_inflight_enter
+[lind-perf] run 10/25: threei::make_syscall::grate_inflight_exit
+[lind-perf] run 11/25: threei::call_grate_func
+[lind-perf] run 12/25: threei::call_grate_func::runtime_lookup
+[lind-perf] run 13/25: rawposix::libc_call
+[lind-perf] run 14/25: rawposix::fdtables_call
+[lind-perf] run 15/25: fdtables::close_virtualfd
+[lind-perf] run 16/25: lind_boot::grate_callback_trampoline
+[lind-perf] run 17/25: lind_boot::grate_callback_trampoline::get_grate_handler
+[lind-perf] run 18/25: lind_3i::submit
+[lind-perf] run 19/25: lind_3i::worker_acquire
+[lind-perf] run 20/25: lind_3i::worker_run
+[lind-perf] run 21/25: lind_3i::worker_run::reset_stack
+[lind-perf] run 22/25: lind_3i::worker_run::pass_fptr_to_wt_call
+[lind-perf] run 23/25: lind_3i::worker_release
+[lind-perf] run 24/25: span::3i_trampoline_call_to_grate_wasm_call
+[lind-perf] run 25/25: span::grate_wasm_return_to_3i
+
+timer overhead per measurement: 11.0 ns (subtracted in net/call and DERIVED)
+
+------------------------------------------------- GUEST -------------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+guest::per_call                                         1000000     59.336 ms       59.3 ns       59.3 ns
+
+---------------------------------------------- LIND_COMMON ----------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+lind_common::syscall_entry                              1001000     49.463 ms       49.4 ns       38.4 ns
+
+------------------------------------------------ THREEI -------------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+threei::make_syscall                                    1001000     45.844 ms       45.8 ns       34.8 ns
+threei::make_syscall::dead_cage_check                   1001000     11.205 ms       11.2 ns        0.2 ns
+threei::make_syscall::handler_lookup                    1001000     41.664 ms       41.6 ns       30.6 ns
+threei::make_syscall::rawposix_dispatch                 1001000     13.996 ms       14.0 ns        3.0 ns
+
+----------------------------------------------- RAWPOSIX ------------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+rawposix::fdtables_call                                 1001000     12.663 ms       12.7 ns        1.7 ns
+
+----------------------------------------------- FDTABLES ------------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+fdtables::close_virtualfd                               1001000     11.767 ms       11.8 ns        0.8 ns
+
+----------------------------- DERIVED (net/call: outer minus nested timers) -----------------------------
+guest side: glibc wrapper + Wasm<->host transition                                                20.9 ns
+lind-common: syscall entry glue (excl. 3i)                                                         3.6 ns
+3i: make_syscall own work, direct path                                                             1.0 ns
+3i -> RawPOSIX dispatch hop (excl. handler), fdtables                                              1.3 ns
+RawPOSIX fdtables handler excl. close_virtualfd                                                    0.9 ns
+
+
+==================================================================================================
+ null_syscall (2003): Wasm<->host round trip
+==================================================================================================
+[lind-perf] run 1/25: guest::per_call
+[lind-perf] run 2/25: lind_common::syscall_entry
+[lind-perf] run 3/25: threei::make_syscall
+[lind-perf] run 4/25: threei::make_syscall::dead_cage_check
+[lind-perf] run 5/25: threei::make_syscall::handler_lookup
+[lind-perf] run 6/25: threei::make_syscall::rawposix_dispatch
+[lind-perf] run 7/25: threei::make_syscall::threei_dispatch
+[lind-perf] run 8/25: threei::copy_data_between_cages
+[lind-perf] run 9/25: threei::make_syscall::grate_inflight_enter
+[lind-perf] run 10/25: threei::make_syscall::grate_inflight_exit
+[lind-perf] run 11/25: threei::call_grate_func
+[lind-perf] run 12/25: threei::call_grate_func::runtime_lookup
+[lind-perf] run 13/25: rawposix::libc_call
+[lind-perf] run 14/25: rawposix::fdtables_call
+[lind-perf] run 15/25: fdtables::close_virtualfd
+[lind-perf] run 16/25: lind_boot::grate_callback_trampoline
+[lind-perf] run 17/25: lind_boot::grate_callback_trampoline::get_grate_handler
+[lind-perf] run 18/25: lind_3i::submit
+[lind-perf] run 19/25: lind_3i::worker_acquire
+[lind-perf] run 20/25: lind_3i::worker_run
+[lind-perf] run 21/25: lind_3i::worker_run::reset_stack
+[lind-perf] run 22/25: lind_3i::worker_run::pass_fptr_to_wt_call
+[lind-perf] run 23/25: lind_3i::worker_release
+[lind-perf] run 24/25: span::3i_trampoline_call_to_grate_wasm_call
+[lind-perf] run 25/25: span::grate_wasm_return_to_3i
+
+timer overhead per measurement: 11.0 ns (subtracted in net/call and DERIVED)
+
+------------------------------------------------- GUEST -------------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+guest::per_call                                         1000000     25.883 ms       25.9 ns       25.9 ns
+
+---------------------------------------------- LIND_COMMON ----------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+lind_common::syscall_entry                              1001000     11.122 ms       11.1 ns        0.1 ns
+
+----------------------------- DERIVED (net/call: outer minus nested timers) -----------------------------
+guest side: glibc wrapper + Wasm<->host transition                                                25.8 ns
+
+
+==================================================================================================
+ grate + libc_syscall
+==================================================================================================
+[lind-perf] run 1/25: guest::per_call
+[lind-perf] run 2/25: lind_common::syscall_entry
+[lind-perf] run 3/25: threei::make_syscall
+[lind-perf] run 4/25: threei::make_syscall::dead_cage_check
+[lind-perf] run 5/25: threei::make_syscall::handler_lookup
+[lind-perf] run 6/25: threei::make_syscall::rawposix_dispatch
+[lind-perf] run 7/25: threei::make_syscall::threei_dispatch
+[lind-perf] run 8/25: threei::copy_data_between_cages
+[lind-perf] run 9/25: threei::make_syscall::grate_inflight_enter
+[lind-perf] run 10/25: threei::make_syscall::grate_inflight_exit
+[lind-perf] run 11/25: threei::call_grate_func
+[lind-perf] run 12/25: threei::call_grate_func::runtime_lookup
+[lind-perf] run 13/25: rawposix::libc_call
+[lind-perf] run 14/25: rawposix::fdtables_call
+[lind-perf] run 15/25: fdtables::close_virtualfd
+[lind-perf] run 16/25: lind_boot::grate_callback_trampoline
+[lind-perf] run 17/25: lind_boot::grate_callback_trampoline::get_grate_handler
+[lind-perf] run 18/25: lind_3i::submit
+[lind-perf] run 19/25: lind_3i::worker_acquire
+[lind-perf] run 20/25: lind_3i::worker_run
+[lind-perf] run 21/25: lind_3i::worker_run::reset_stack
+[lind-perf] run 22/25: lind_3i::worker_run::pass_fptr_to_wt_call
+[lind-perf] run 23/25: lind_3i::worker_release
+[lind-perf] run 24/25: span::3i_trampoline_call_to_grate_wasm_call
+[lind-perf] run 25/25: span::grate_wasm_return_to_3i
+
+timer overhead per measurement: 11.0 ns (subtracted in net/call and DERIVED)
+
+------------------------------------------------- GUEST -------------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+guest::per_call                                         1000000    225.464 ms      225.5 ns      225.5 ns
+
+---------------------------------------------- LIND_COMMON ----------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+lind_common::syscall_entry                              1001000    209.009 ms      208.8 ns      197.8 ns
+
+------------------------------------------------ THREEI -------------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+threei::make_syscall                                    1001000    208.933 ms      208.7 ns      197.7 ns
+threei::make_syscall::dead_cage_check                   1001000     11.344 ms       11.3 ns        0.3 ns
+threei::make_syscall::handler_lookup                    1001000     44.239 ms       44.2 ns       33.2 ns
+threei::make_syscall::grate_inflight_enter              1001000     24.403 ms       24.4 ns       13.4 ns
+threei::make_syscall::grate_inflight_exit               1001000     23.809 ms       23.8 ns       12.8 ns
+threei::call_grate_func                                 1001000    149.757 ms      149.6 ns      138.6 ns
+threei::call_grate_func::runtime_lookup                 1001000     33.533 ms       33.5 ns       22.5 ns
+
+----------------------------------------------- LIND_BOOT -----------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+lind_boot::grate_callback_trampoline                    1001000    125.487 ms      125.4 ns      114.4 ns
+lind_boot::grate_callback_trampoline::get_grate_handler    1001000     22.990 ms       23.0 ns       12.0 ns
+
+------------------------------------------------ LIND_3I ------------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+lind_3i::submit                                         1001000    106.273 ms      106.2 ns       95.2 ns
+lind_3i::worker_acquire                                 1001000     22.577 ms       22.6 ns       11.6 ns
+lind_3i::worker_run                                     1001000     74.804 ms       74.7 ns       63.7 ns
+lind_3i::worker_run::reset_stack                        1001000     34.574 ms       34.5 ns       23.5 ns
+lind_3i::worker_run::pass_fptr_to_wt_call               1001000     55.908 ms       55.9 ns       44.9 ns
+lind_3i::worker_release                                 1001000     22.490 ms       22.5 ns       11.5 ns
+
+------------------------------------------------- SPAN --------------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+span::3i_trampoline_call_to_grate_wasm_call             1001000     64.808 ms       64.7 ns       53.7 ns
+span::grate_wasm_return_to_3i                           1001000     34.816 ms       34.8 ns       23.8 ns
+
+----------------------------- DERIVED (net/call: outer minus nested timers) -----------------------------
+guest side: glibc wrapper + Wasm<->host transition                                                27.7 ns
+lind-common: syscall entry glue (excl. 3i)                                                         0.1 ns
+3i: make_syscall own work, grate path                                                             -0.6 ns
+3i: call_grate_func own work (excl. lookup + trampoline)                                           1.7 ns
+lind-boot: trampoline own work (excl. lookup + submit)                                             7.2 ns
+lind-3i: submit bookkeeping (excl. acquire/run/release)                                            8.4 ns
+lind-3i: worker run excl. stack reset and Wasm call                                               -4.7 ns
+
+
+==================================================================================================
+ grate + fdtables_syscall
+==================================================================================================
+[lind-perf] run 1/25: guest::per_call
+[lind-perf] run 2/25: lind_common::syscall_entry
+[lind-perf] run 3/25: threei::make_syscall
+[lind-perf] run 4/25: threei::make_syscall::dead_cage_check
+[lind-perf] run 5/25: threei::make_syscall::handler_lookup
+[lind-perf] run 6/25: threei::make_syscall::rawposix_dispatch
+[lind-perf] run 7/25: threei::make_syscall::threei_dispatch
+[lind-perf] run 8/25: threei::copy_data_between_cages
+[lind-perf] run 9/25: threei::make_syscall::grate_inflight_enter
+[lind-perf] run 10/25: threei::make_syscall::grate_inflight_exit
+[lind-perf] run 11/25: threei::call_grate_func
+[lind-perf] run 12/25: threei::call_grate_func::runtime_lookup
+[lind-perf] run 13/25: rawposix::libc_call
+[lind-perf] run 14/25: rawposix::fdtables_call
+[lind-perf] run 15/25: fdtables::close_virtualfd
+[lind-perf] run 16/25: lind_boot::grate_callback_trampoline
+[lind-perf] run 17/25: lind_boot::grate_callback_trampoline::get_grate_handler
+[lind-perf] run 18/25: lind_3i::submit
+[lind-perf] run 19/25: lind_3i::worker_acquire
+[lind-perf] run 20/25: lind_3i::worker_run
+[lind-perf] run 21/25: lind_3i::worker_run::reset_stack
+[lind-perf] run 22/25: lind_3i::worker_run::pass_fptr_to_wt_call
+[lind-perf] run 23/25: lind_3i::worker_release
+[lind-perf] run 24/25: span::3i_trampoline_call_to_grate_wasm_call
+[lind-perf] run 25/25: span::grate_wasm_return_to_3i
+
+timer overhead per measurement: 11.0 ns (subtracted in net/call and DERIVED)
+
+------------------------------------------------- GUEST -------------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+guest::per_call                                         1000000    223.912 ms      223.9 ns      223.9 ns
+
+---------------------------------------------- LIND_COMMON ----------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+lind_common::syscall_entry                              1001000    213.523 ms      213.3 ns      202.3 ns
+
+------------------------------------------------ THREEI -------------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+threei::make_syscall                                    1001000    207.552 ms      207.3 ns      196.3 ns
+threei::make_syscall::dead_cage_check                   1001000     11.339 ms       11.3 ns        0.3 ns
+threei::make_syscall::handler_lookup                    1001000     41.780 ms       41.7 ns       30.7 ns
+threei::make_syscall::grate_inflight_enter              1001000     24.439 ms       24.4 ns       13.4 ns
+threei::make_syscall::grate_inflight_exit               1001000     24.461 ms       24.4 ns       13.4 ns
+threei::call_grate_func                                 1001000    152.127 ms      152.0 ns      141.0 ns
+threei::call_grate_func::runtime_lookup                 1001000     33.161 ms       33.1 ns       22.1 ns
+
+----------------------------------------------- LIND_BOOT -----------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+lind_boot::grate_callback_trampoline                    1001000    125.984 ms      125.9 ns      114.9 ns
+lind_boot::grate_callback_trampoline::get_grate_handler    1001000     23.007 ms       23.0 ns       12.0 ns
+
+------------------------------------------------ LIND_3I ------------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+lind_3i::submit                                         1001000    105.812 ms      105.7 ns       94.7 ns
+lind_3i::worker_acquire                                 1001000     22.524 ms       22.5 ns       11.5 ns
+lind_3i::worker_run                                     1001000     75.629 ms       75.6 ns       64.6 ns
+lind_3i::worker_run::reset_stack                        1001000     31.336 ms       31.3 ns       20.3 ns
+lind_3i::worker_run::pass_fptr_to_wt_call               1001000     55.415 ms       55.4 ns       44.4 ns
+lind_3i::worker_release                                 1001000     22.283 ms       22.3 ns       11.3 ns
+
+------------------------------------------------- SPAN --------------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+span::3i_trampoline_call_to_grate_wasm_call             1001000     63.533 ms       63.5 ns       52.5 ns
+span::grate_wasm_return_to_3i                           1001000     35.025 ms       35.0 ns       24.0 ns
+
+----------------------------- DERIVED (net/call: outer minus nested timers) -----------------------------
+guest side: glibc wrapper + Wasm<->host transition                                                21.6 ns
+lind-common: syscall entry glue (excl. 3i)                                                         6.0 ns
+3i: make_syscall own work, grate path                                                             -2.5 ns
+3i: call_grate_func own work (excl. lookup + trampoline)                                           4.0 ns
+lind-boot: trampoline own work (excl. lookup + submit)                                             8.2 ns
+lind-3i: submit bookkeeping (excl. acquire/run/release)                                            7.4 ns
+lind-3i: worker run excl. stack reset and Wasm call                                               -0.1 ns
+
+
+==================================================================================================
+ forwarding grate + libc_syscall: cage -> grate -> RawPOSIX -> kernel
+==================================================================================================
+[lind-perf] run 1/25: guest::per_call
+[lind-perf] run 2/25: lind_common::syscall_entry
+[lind-perf] run 3/25: threei::make_syscall
+[lind-perf] run 4/25: threei::make_syscall::dead_cage_check
+[lind-perf] run 5/25: threei::make_syscall::handler_lookup
+[lind-perf] run 6/25: threei::make_syscall::rawposix_dispatch
+[lind-perf] run 7/25: threei::make_syscall::threei_dispatch
+[lind-perf] run 8/25: threei::copy_data_between_cages
+[lind-perf] run 9/25: threei::make_syscall::grate_inflight_enter
+[lind-perf] run 10/25: threei::make_syscall::grate_inflight_exit
+[lind-perf] run 11/25: threei::call_grate_func
+[lind-perf] run 12/25: threei::call_grate_func::runtime_lookup
+[lind-perf] run 13/25: rawposix::libc_call
+[lind-perf] run 14/25: rawposix::fdtables_call
+[lind-perf] run 15/25: fdtables::close_virtualfd
+[lind-perf] run 16/25: lind_boot::grate_callback_trampoline
+[lind-perf] run 17/25: lind_boot::grate_callback_trampoline::get_grate_handler
+[lind-perf] run 18/25: lind_3i::submit
+[lind-perf] run 19/25: lind_3i::worker_acquire
+[lind-perf] run 20/25: lind_3i::worker_run
+[lind-perf] run 21/25: lind_3i::worker_run::reset_stack
+[lind-perf] run 22/25: lind_3i::worker_run::pass_fptr_to_wt_call
+[lind-perf] run 23/25: lind_3i::worker_release
+[lind-perf] run 24/25: span::3i_trampoline_call_to_grate_wasm_call
+[lind-perf] run 25/25: span::grate_wasm_return_to_3i
+
+forwarded calls seen: per-layer totals below mix the cage's calls and the grate's forwarded (fwd) calls; see the PER SYSCALL table for the breakdown.
+
+timer overhead per measurement: 11.0 ns (subtracted in net/call and DERIVED)
+
+------------------------------------------------- GUEST -------------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+guest::per_call                                         1000000    525.910 ms      525.9 ns      525.9 ns
+
+---------------------------------------------- LIND_COMMON ----------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+lind_common::syscall_entry                              2002000    659.493 ms      329.4 ns      318.4 ns
+
+------------------------------------------------ THREEI -------------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+threei::make_syscall                                    2002000    647.782 ms      323.6 ns      312.6 ns
+threei::make_syscall::dead_cage_check                   2002000     53.881 ms       26.9 ns       15.9 ns
+threei::make_syscall::handler_lookup                    2002000     84.036 ms       42.0 ns       31.0 ns
+threei::make_syscall::rawposix_dispatch                 1001000    107.881 ms      107.8 ns       96.8 ns
+threei::make_syscall::grate_inflight_enter              1001000     25.330 ms       25.3 ns       14.3 ns
+threei::make_syscall::grate_inflight_exit               1001000     24.205 ms       24.2 ns       13.2 ns
+threei::call_grate_func                                 1001000    405.475 ms      405.1 ns      394.1 ns
+threei::call_grate_func::runtime_lookup                 1001000     34.563 ms       34.5 ns       23.5 ns
+
+----------------------------------------------- RAWPOSIX ------------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+rawposix::libc_call                                     1001000     78.060 ms       78.0 ns       67.0 ns
+
+----------------------------------------------- LIND_BOOT -----------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+lind_boot::grate_callback_trampoline                    1001000    370.108 ms      369.7 ns      358.7 ns
+lind_boot::grate_callback_trampoline::get_grate_handler    1001000     24.087 ms       24.1 ns       13.1 ns
+
+------------------------------------------------ LIND_3I ------------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+lind_3i::submit                                         1001000    333.808 ms      333.5 ns      322.5 ns
+lind_3i::worker_acquire                                 1001000     23.148 ms       23.1 ns       12.1 ns
+lind_3i::worker_run                                     1001000    294.608 ms      294.3 ns      283.3 ns
+lind_3i::worker_run::reset_stack                        1001000     36.329 ms       36.3 ns       25.3 ns
+lind_3i::worker_run::pass_fptr_to_wt_call               1001000    276.928 ms      276.7 ns      265.7 ns
+lind_3i::worker_release                                 1001000     22.516 ms       22.5 ns       11.5 ns
+
+------------------------------------------------- SPAN --------------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+span::3i_trampoline_call_to_grate_wasm_call             1001000     67.411 ms       67.3 ns       56.3 ns
+span::grate_wasm_return_to_3i                           1001000     59.012 ms       59.0 ns       48.0 ns
+
+-------------------------------------------- PER SYSCALL (net/call; total = time in the syscall entry) ---------------------------------------------
+syscall                    origin      calls       total  share       entry          3i   3i lookup    rawposix     3i call       grate  grate wasm
+----------------------------------------------------------------------------------------------------------------------------------------------------
+bench_libc (2001)          cage      1001000  491.580 ms  74.5%    480.1 ns    471.5 ns     32.8 ns           -           -    394.1 ns    265.7 ns
+bench_libc (2001)          fwd       1001000  167.913 ms  25.5%    156.7 ns    153.6 ns     29.2 ns     96.8 ns           -           -           -
+origin: cage = program's own call, grate = grate's own call, fwd = made by a grate while servicing another call
+
+==================================================================================================
+ forwarding grate + fdtables_syscall: cage -> grate -> RawPOSIX -> fdtables
+==================================================================================================
+[lind-perf] run 1/25: guest::per_call
+[lind-perf] run 2/25: lind_common::syscall_entry
+[lind-perf] run 3/25: threei::make_syscall
+[lind-perf] run 4/25: threei::make_syscall::dead_cage_check
+[lind-perf] run 5/25: threei::make_syscall::handler_lookup
+[lind-perf] run 6/25: threei::make_syscall::rawposix_dispatch
+[lind-perf] run 7/25: threei::make_syscall::threei_dispatch
+[lind-perf] run 8/25: threei::copy_data_between_cages
+[lind-perf] run 9/25: threei::make_syscall::grate_inflight_enter
+[lind-perf] run 10/25: threei::make_syscall::grate_inflight_exit
+[lind-perf] run 11/25: threei::call_grate_func
+[lind-perf] run 12/25: threei::call_grate_func::runtime_lookup
+[lind-perf] run 13/25: rawposix::libc_call
+[lind-perf] run 14/25: rawposix::fdtables_call
+[lind-perf] run 15/25: fdtables::close_virtualfd
+[lind-perf] run 16/25: lind_boot::grate_callback_trampoline
+[lind-perf] run 17/25: lind_boot::grate_callback_trampoline::get_grate_handler
+[lind-perf] run 18/25: lind_3i::submit
+[lind-perf] run 19/25: lind_3i::worker_acquire
+[lind-perf] run 20/25: lind_3i::worker_run
+[lind-perf] run 21/25: lind_3i::worker_run::reset_stack
+[lind-perf] run 22/25: lind_3i::worker_run::pass_fptr_to_wt_call
+[lind-perf] run 23/25: lind_3i::worker_release
+[lind-perf] run 24/25: span::3i_trampoline_call_to_grate_wasm_call
+[lind-perf] run 25/25: span::grate_wasm_return_to_3i
+
+forwarded calls seen: per-layer totals below mix the cage's calls and the grate's forwarded (fwd) calls; see the PER SYSCALL table for the breakdown.
+
+timer overhead per measurement: 11.0 ns (subtracted in net/call and DERIVED)
+
+------------------------------------------------- GUEST -------------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+guest::per_call                                         1000000    418.226 ms      418.2 ns      418.2 ns
+
+---------------------------------------------- LIND_COMMON ----------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+lind_common::syscall_entry                              2002000    499.560 ms      249.5 ns      238.5 ns
+
+------------------------------------------------ THREEI -------------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+threei::make_syscall                                    2002000    488.136 ms      243.8 ns      232.8 ns
+threei::make_syscall::dead_cage_check                   2002000     52.615 ms       26.3 ns       15.3 ns
+threei::make_syscall::handler_lookup                    2002000     87.362 ms       43.6 ns       32.6 ns
+threei::make_syscall::rawposix_dispatch                 1001000     45.022 ms       45.0 ns       34.0 ns
+threei::make_syscall::grate_inflight_enter              1001000     24.723 ms       24.7 ns       13.7 ns
+threei::make_syscall::grate_inflight_exit               1001000     23.653 ms       23.6 ns       12.6 ns
+threei::call_grate_func                                 1001000    297.868 ms      297.6 ns      286.6 ns
+threei::call_grate_func::runtime_lookup                 1001000     33.594 ms       33.6 ns       22.6 ns
+
+----------------------------------------------- RAWPOSIX ------------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+rawposix::fdtables_call                                 1001000     12.843 ms       12.8 ns        1.8 ns
+
+----------------------------------------------- FDTABLES ------------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+fdtables::close_virtualfd                               1001000     11.769 ms       11.8 ns        0.8 ns
+
+----------------------------------------------- LIND_BOOT -----------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+lind_boot::grate_callback_trampoline                    1001000    262.388 ms      262.1 ns      251.1 ns
+lind_boot::grate_callback_trampoline::get_grate_handler    1001000     23.894 ms       23.9 ns       12.9 ns
+
+------------------------------------------------ LIND_3I ------------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+lind_3i::submit                                         1001000    231.214 ms      231.0 ns      220.0 ns
+lind_3i::worker_acquire                                 1001000     22.815 ms       22.8 ns       11.8 ns
+lind_3i::worker_run                                     1001000    196.073 ms      195.9 ns      184.9 ns
+lind_3i::worker_run::reset_stack                        1001000     33.299 ms       33.3 ns       22.3 ns
+lind_3i::worker_run::pass_fptr_to_wt_call               1001000    179.082 ms      178.9 ns      167.9 ns
+lind_3i::worker_release                                 1001000     22.250 ms       22.2 ns       11.2 ns
+
+------------------------------------------------- SPAN --------------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+span::3i_trampoline_call_to_grate_wasm_call             1001000     63.795 ms       63.7 ns       52.7 ns
+span::grate_wasm_return_to_3i                           1001000     53.588 ms       53.5 ns       42.5 ns
+
+-------------------------------------------- PER SYSCALL (net/call; total = time in the syscall entry) ---------------------------------------------
+syscall                    origin      calls       total  share       entry          3i   3i lookup    rawposix     3i call       grate  grate wasm
+----------------------------------------------------------------------------------------------------------------------------------------------------
+bench_fdtables (2002)      cage      1001000  395.940 ms  79.3%    384.5 ns    377.3 ns     32.4 ns           -           -    286.6 ns    167.9 ns
+bench_fdtables (2002)      fwd       1001000  103.621 ms  20.7%     92.5 ns     88.3 ns     32.9 ns     34.0 ns           -           -           -
+origin: cage = program's own call, grate = grate's own call, fwd = made by a grate while servicing another call
+
+==================================================================================================
+ fork_wait: fork() + waitpid()
+==================================================================================================
+[lind-perf] run 1/18: guest::per_call
+[lind-perf] run 2/18: fork::parent_setup
+[lind-perf] run 3/18: fork::parent_setup::snapshots
+[lind-perf] run 4/18: fork::parent_unwind
+[lind-perf] run 5/18: fork::parent_callback
+[lind-perf] run 6/18: fork::parent_callback::thread_spawn
+[lind-perf] run 7/18: fork::parent_callback::wait_for_child
+[lind-perf] run 8/18: fork::parent_rewind
+[lind-perf] run 9/18: fork::child_setup
+[lind-perf] run 10/18: fork::child_setup::new_store
+[lind-perf] run 11/18: fork::child_setup::new_child_linker
+[lind-perf] run 12/18: fork::child_setup::instantiate
+[lind-perf] run 13/18: fork::child_setup::instantiate::copy_memory
+[lind-perf] run 14/18: fork::child_rewind_to_exit
+[lind-perf] run 15/18: exit::exit_call
+[lind-perf] run 16/18: exit::unwind
+[lind-perf] run 17/18: exit::cleanup
+[lind-perf] run 18/18: exit::cleanup::cage_finalize
+
+timer overhead per measurement: 11.0 ns (subtracted in net/call and DERIVED)
+
+------------------------------------------------- GUEST -------------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+guest::per_call                                             200       1.785 s      8.923 ms      8.923 ms
+
+------------------------------------------------- FORK --------------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+fork::parent_setup                                          205     94.412 ms    460.545 us    460.534 us
+fork::parent_setup::snapshots                               205     79.958 ms    390.040 us    390.029 us
+fork::parent_unwind                                         205     18.853 ms     91.966 us     91.955 us
+fork::parent_callback                                       205    911.837 ms      4.448 ms      4.448 ms
+fork::parent_callback::thread_spawn                         205      5.568 ms     27.162 us     27.151 us
+fork::parent_callback::wait_for_child                       205    864.875 ms      4.219 ms      4.219 ms
+fork::parent_rewind                                         205    153.398 ms    748.283 us    748.272 us
+fork::child_setup                                           205    528.673 ms      2.579 ms      2.579 ms
+fork::child_setup::new_store                                205     13.697 ms     66.815 us     66.804 us
+fork::child_setup::new_child_linker                         205      4.297 ms     20.962 us     20.951 us
+fork::child_setup::instantiate                              205    217.549 ms      1.061 ms      1.061 ms
+fork::child_setup::instantiate::copy_memory                 205    215.296 ms      1.050 ms      1.050 ms
+fork::child_rewind_to_exit                                  205    618.675 ms      3.018 ms      3.018 ms
+
+------------------------------------------------- EXIT --------------------------------------------------
+name                                                      calls         total      avg/call      net/call
+---------------------------------------------------------------------------------------------------------
+exit::exit_call                                             206    294.384 us      1.429 us      1.418 us
+exit::unwind                                                206     18.389 ms     89.266 us     89.255 us
+exit::cleanup                                               206    158.885 ms    771.285 us    771.274 us
+exit::cleanup::cage_finalize                                206    127.857 ms    620.664 us    620.653 us
+
+----------------------------- DERIVED (net/call: outer minus nested timers) -----------------------------
+fork: parent setup excl. snapshots                                                              70.506 us
+fork: parent callback excl. thread spawn and waiting                                           201.931 us
+fork: child setup excl. store, linker, instantiate                                               1.430 ms
+fork: instantiate excl. copying memory                                                          10.991 us
+exit: cleanup excl. cage_finalize                                                              150.621 us
+

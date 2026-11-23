@@ -1,0 +1,1 @@
+Simple write: 0.2069 microseconds

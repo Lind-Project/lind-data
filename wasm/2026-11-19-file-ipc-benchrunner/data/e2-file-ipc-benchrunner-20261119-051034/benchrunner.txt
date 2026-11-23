@@ -1,0 +1,187 @@
+lind-perf
+0cb8221ec lind-perf: kill a hung run if it ignores timeout's stop signal (timeout -k 10)
+== run 1
+Running:  /home/lind/lind-wasm/tests/benchmarks/fs_write.c
+Running:  /home/lind/lind-wasm/tests/benchmarks/fs_read.c
+Running:  /home/lind/lind-wasm/tests/benchmarks/ipc_uds.c
+Running:  /home/lind/lind-wasm/tests/benchmarks/ipc_pipe.c
+Running:  /home/lind/lind-wasm/tests/benchmarks/cage_stress.c
+Running:  /home/lind/lind-wasm/tests/benchmarks/perf_fibonacci.c
+Running:  /home/lind/lind-wasm/tests/benchmarks/imfs-grate.fs_read.grate
+Running:  /home/lind/lind-wasm/tests/benchmarks/imfs-grate.fs_write.grate
+TEST                      PARAM            LINUX (ns)     LIND (ns)           GRATE (ns)   ITERATIONS  DESCRIPTION                                                                                     
+------------------------  ---------------  -------------  ------------------  -----------  ----------  ------------------------------------------------------------------------------------------------
+Cage fork + waitpid       -                47581 (1.000)  11817867 (248.374)  --           2000        Measures cage metadata lookup and fork/wait lifecycle latency.                                  
+Cage getpid               -                62 (1.000)     73 (1.177)          --           1000000     Measures cage metadata lookup and fork/wait lifecycle latency.                                  
+Cage getppid              -                63 (1.000)     73 (1.159)          --           1000000     Measures cage metadata lookup and fork/wait lifecycle latency.                                  
+Cage mixed lookup         -                62 (1.000)     103 (1.661)         --           1000000     Measures cage metadata lookup and fork/wait lifecycle latency.                                  
+Cage threaded lookup      4                64 (1.000)     468 (7.312)         --           1000000     Measures cage metadata lookup and fork/wait lifecycle latency.                                  
+Fibonacci                 0                591 (1.000)    1823 (3.085)        --           10000       Compute Fibonacci(1000) to measure compute overhead.                                            
+Pipe (RTT)                1                1810 (1.000)   2413 (1.333)        --           1000000     Anonymous pipe RTT for PARAM bytes via parent/child ping-pong.                                  
+Pipe (RTT)                1024             1845 (1.000)   2462 (1.334)        --           1000000                                                                                                     
+Pipe (RTT)                4096             1912 (1.000)   2543 (1.330)        --           1000000                                                                                                     
+Pipe (RTT)                10240            3002 (1.000)   3748 (1.249)        --           10000                                                                                                       
+Read                      1                188 (1.000)    381 (2.027)         647 (3.441)  1000000     Issues pread() for buffer of size PARAM. / In-Memory File System grate interposing on FS calls. 
+Read                      1024             198 (1.000)    392 (1.980)         651 (3.288)  1000000                                                                                                     
+Read                      4096             217 (1.000)    412 (1.899)         674 (3.106)  1000000                                                                                                     
+Read                      10240            317 (1.000)    519 (1.637)         726 (2.290)  10000                                                                                                       
+Unix Domain Socket (RTT)  (DGRAM, 1)       2645 (1.000)   3268 (1.236)        --           1000000     (AF_UNIX, STREAM|DGRAM) RTT through ping-pong of PARAM bytes.                                   
+Unix Domain Socket (RTT)  (DGRAM, 1024)    2720 (1.000)   3347 (1.231)        --           1000000                                                                                                     
+Unix Domain Socket (RTT)  (DGRAM, 10240)   3719 (1.000)   4412 (1.186)        --           10000                                                                                                       
+Unix Domain Socket (RTT)  (DGRAM, 4096)    2936 (1.000)   3776 (1.286)        --           1000000                                                                                                     
+Unix Domain Socket (RTT)  (STREAM, 1)      2967 (1.000)   3117 (1.051)        --           1000000                                                                                                     
+Unix Domain Socket (RTT)  (STREAM, 1024)   3033 (1.000)   3326 (1.097)        --           1000000                                                                                                     
+Unix Domain Socket (RTT)  (STREAM, 10240)  4144 (1.000)   4539 (1.095)        --           10000                                                                                                       
+Unix Domain Socket (RTT)  (STREAM, 4096)   3281 (1.000)   3729 (1.137)        --           1000000                                                                                                     
+Write                     1                301 (1.000)    488 (1.621)         771 (2.561)  1000000     Issues pwrite() for buffer of size PARAM. / In-Memory File System grate interposing on FS calls.
+Write                     1024             309 (1.000)    496 (1.605)         775 (2.508)  1000000                                                                                                     
+Write                     4096             324 (1.000)    510 (1.574)         798 (2.463)  1000000                                                                                                     
+Write                     10240            556 (1.000)    743 (1.336)         842 (1.514)  10000                                                                                                       
+== run 2
+Running:  /home/lind/lind-wasm/tests/benchmarks/fs_write.c
+Running:  /home/lind/lind-wasm/tests/benchmarks/fs_read.c
+Running:  /home/lind/lind-wasm/tests/benchmarks/ipc_uds.c
+Running:  /home/lind/lind-wasm/tests/benchmarks/ipc_pipe.c
+Running:  /home/lind/lind-wasm/tests/benchmarks/cage_stress.c
+Running:  /home/lind/lind-wasm/tests/benchmarks/perf_fibonacci.c
+Running:  /home/lind/lind-wasm/tests/benchmarks/imfs-grate.fs_read.grate
+Running:  /home/lind/lind-wasm/tests/benchmarks/imfs-grate.fs_write.grate
+TEST                      PARAM            LINUX (ns)     LIND (ns)           GRATE (ns)   ITERATIONS  DESCRIPTION                                                                                     
+------------------------  ---------------  -------------  ------------------  -----------  ----------  ------------------------------------------------------------------------------------------------
+Cage fork + waitpid       -                47565 (1.000)  11861322 (249.371)  --           2000        Measures cage metadata lookup and fork/wait lifecycle latency.                                  
+Cage getpid               -                62 (1.000)     75 (1.210)          --           1000000     Measures cage metadata lookup and fork/wait lifecycle latency.                                  
+Cage getppid              -                63 (1.000)     73 (1.159)          --           1000000     Measures cage metadata lookup and fork/wait lifecycle latency.                                  
+Cage mixed lookup         -                62 (1.000)     104 (1.677)         --           1000000     Measures cage metadata lookup and fork/wait lifecycle latency.                                  
+Cage threaded lookup      4                64 (1.000)     129 (2.016)         --           1000000     Measures cage metadata lookup and fork/wait lifecycle latency.                                  
+Fibonacci                 0                582 (1.000)    1824 (3.134)        --           10000       Compute Fibonacci(1000) to measure compute overhead.                                            
+Pipe (RTT)                1                1856 (1.000)   2446 (1.318)        --           1000000     Anonymous pipe RTT for PARAM bytes via parent/child ping-pong.                                  
+Pipe (RTT)                1024             1863 (1.000)   2440 (1.310)        --           1000000                                                                                                     
+Pipe (RTT)                4096             1916 (1.000)   2566 (1.339)        --           1000000                                                                                                     
+Pipe (RTT)                10240            3018 (1.000)   3922 (1.300)        --           10000                                                                                                       
+Read                      1                188 (1.000)    382 (2.032)         693 (3.686)  1000000     Issues pread() for buffer of size PARAM. / In-Memory File System grate interposing on FS calls. 
+Read                      1024             200 (1.000)    392 (1.960)         697 (3.485)  1000000                                                                                                     
+Read                      4096             217 (1.000)    413 (1.903)         718 (3.309)  1000000                                                                                                     
+Read                      10240            317 (1.000)    518 (1.634)         769 (2.426)  10000                                                                                                       
+Unix Domain Socket (RTT)  (DGRAM, 1)       2668 (1.000)   3272 (1.226)        --           1000000     (AF_UNIX, STREAM|DGRAM) RTT through ping-pong of PARAM bytes.                                   
+Unix Domain Socket (RTT)  (DGRAM, 1024)    2836 (1.000)   3519 (1.241)        --           1000000                                                                                                     
+Unix Domain Socket (RTT)  (DGRAM, 10240)   3608 (1.000)   4425 (1.226)        --           10000                                                                                                       
+Unix Domain Socket (RTT)  (DGRAM, 4096)    2936 (1.000)   3779 (1.287)        --           1000000                                                                                                     
+Unix Domain Socket (RTT)  (STREAM, 1)      2908 (1.000)   3113 (1.070)        --           1000000                                                                                                     
+Unix Domain Socket (RTT)  (STREAM, 1024)   2949 (1.000)   3172 (1.076)        --           1000000                                                                                                     
+Unix Domain Socket (RTT)  (STREAM, 10240)  4584 (1.000)   4717 (1.029)        --           10000                                                                                                       
+Unix Domain Socket (RTT)  (STREAM, 4096)   3375 (1.000)   3728 (1.105)        --           1000000                                                                                                     
+Write                     1                383 (1.000)    485 (1.266)         771 (2.013)  1000000     Issues pwrite() for buffer of size PARAM. / In-Memory File System grate interposing on FS calls.
+Write                     1024             308 (1.000)    494 (1.604)         775 (2.516)  1000000                                                                                                     
+Write                     4096             324 (1.000)    508 (1.568)         796 (2.457)  1000000                                                                                                     
+Write                     10240            550 (1.000)    747 (1.358)         837 (1.522)  10000                                                                                                       
+== run 3
+Running:  /home/lind/lind-wasm/tests/benchmarks/fs_write.c
+Running:  /home/lind/lind-wasm/tests/benchmarks/fs_read.c
+Running:  /home/lind/lind-wasm/tests/benchmarks/ipc_uds.c
+Running:  /home/lind/lind-wasm/tests/benchmarks/ipc_pipe.c
+Running:  /home/lind/lind-wasm/tests/benchmarks/cage_stress.c
+Running:  /home/lind/lind-wasm/tests/benchmarks/perf_fibonacci.c
+Running:  /home/lind/lind-wasm/tests/benchmarks/imfs-grate.fs_read.grate
+Running:  /home/lind/lind-wasm/tests/benchmarks/imfs-grate.fs_write.grate
+TEST                      PARAM            LINUX (ns)     LIND (ns)           GRATE (ns)   ITERATIONS  DESCRIPTION                                                                                     
+------------------------  ---------------  -------------  ------------------  -----------  ----------  ------------------------------------------------------------------------------------------------
+Cage fork + waitpid       -                46803 (1.000)  11752526 (251.106)  --           2000        Measures cage metadata lookup and fork/wait lifecycle latency.                                  
+Cage getpid               -                62 (1.000)     72 (1.161)          --           1000000     Measures cage metadata lookup and fork/wait lifecycle latency.                                  
+Cage getppid              -                63 (1.000)     73 (1.159)          --           1000000     Measures cage metadata lookup and fork/wait lifecycle latency.                                  
+Cage mixed lookup         -                62 (1.000)     102 (1.645)         --           1000000     Measures cage metadata lookup and fork/wait lifecycle latency.                                  
+Cage threaded lookup      4                64 (1.000)     128 (2.000)         --           1000000     Measures cage metadata lookup and fork/wait lifecycle latency.                                  
+Fibonacci                 0                580 (1.000)    1822 (3.141)        --           10000       Compute Fibonacci(1000) to measure compute overhead.                                            
+Pipe (RTT)                1                1806 (1.000)   2429 (1.345)        --           1000000     Anonymous pipe RTT for PARAM bytes via parent/child ping-pong.                                  
+Pipe (RTT)                1024             1854 (1.000)   2417 (1.304)        --           1000000                                                                                                     
+Pipe (RTT)                4096             1899 (1.000)   2545 (1.340)        --           1000000                                                                                                     
+Pipe (RTT)                10240            3006 (1.000)   3912 (1.301)        --           10000                                                                                                       
+Read                      1                188 (1.000)    381 (2.027)         645 (3.431)  1000000     Issues pread() for buffer of size PARAM. / In-Memory File System grate interposing on FS calls. 
+Read                      1024             199 (1.000)    392 (1.970)         649 (3.261)  1000000                                                                                                     
+Read                      4096             217 (1.000)    412 (1.899)         674 (3.106)  1000000                                                                                                     
+Read                      10240            316 (1.000)    519 (1.642)         726 (2.297)  10000                                                                                                       
+Unix Domain Socket (RTT)  (DGRAM, 1)       2657 (1.000)   3446 (1.297)        --           1000000     (AF_UNIX, STREAM|DGRAM) RTT through ping-pong of PARAM bytes.                                   
+Unix Domain Socket (RTT)  (DGRAM, 1024)    2667 (1.000)   3494 (1.310)        --           1000000                                                                                                     
+Unix Domain Socket (RTT)  (DGRAM, 10240)   3608 (1.000)   4407 (1.221)        --           10000                                                                                                       
+Unix Domain Socket (RTT)  (DGRAM, 4096)    2961 (1.000)   3781 (1.277)        --           1000000                                                                                                     
+Unix Domain Socket (RTT)  (STREAM, 1)      2959 (1.000)   3117 (1.053)        --           1000000                                                                                                     
+Unix Domain Socket (RTT)  (STREAM, 1024)   3032 (1.000)   3163 (1.043)        --           1000000                                                                                                     
+Unix Domain Socket (RTT)  (STREAM, 10240)  4229 (1.000)   4509 (1.066)        --           10000                                                                                                       
+Unix Domain Socket (RTT)  (STREAM, 4096)   3273 (1.000)   3731 (1.140)        --           1000000                                                                                                     
+Write                     1                301 (1.000)    483 (1.605)         774 (2.571)  1000000     Issues pwrite() for buffer of size PARAM. / In-Memory File System grate interposing on FS calls.
+Write                     1024             309 (1.000)    493 (1.595)         777 (2.515)  1000000                                                                                                     
+Write                     4096             331 (1.000)    507 (1.532)         799 (2.414)  1000000                                                                                                     
+Write                     10240            556 (1.000)    741 (1.333)         843 (1.516)  10000                                                                                                       
+== run 4
+Running:  /home/lind/lind-wasm/tests/benchmarks/fs_write.c
+Running:  /home/lind/lind-wasm/tests/benchmarks/fs_read.c
+Running:  /home/lind/lind-wasm/tests/benchmarks/ipc_uds.c
+Running:  /home/lind/lind-wasm/tests/benchmarks/ipc_pipe.c
+Running:  /home/lind/lind-wasm/tests/benchmarks/cage_stress.c
+Running:  /home/lind/lind-wasm/tests/benchmarks/perf_fibonacci.c
+Running:  /home/lind/lind-wasm/tests/benchmarks/imfs-grate.fs_read.grate
+Running:  /home/lind/lind-wasm/tests/benchmarks/imfs-grate.fs_write.grate
+TEST                      PARAM            LINUX (ns)     LIND (ns)           GRATE (ns)   ITERATIONS  DESCRIPTION                                                                                     
+------------------------  ---------------  -------------  ------------------  -----------  ----------  ------------------------------------------------------------------------------------------------
+Cage fork + waitpid       -                47733 (1.000)  11742982 (246.014)  --           2000        Measures cage metadata lookup and fork/wait lifecycle latency.                                  
+Cage getpid               -                62 (1.000)     74 (1.194)          --           1000000     Measures cage metadata lookup and fork/wait lifecycle latency.                                  
+Cage getppid              -                63 (1.000)     74 (1.175)          --           1000000     Measures cage metadata lookup and fork/wait lifecycle latency.                                  
+Cage mixed lookup         -                62 (1.000)     103 (1.661)         --           1000000     Measures cage metadata lookup and fork/wait lifecycle latency.                                  
+Cage threaded lookup      4                63 (1.000)     129 (2.048)         --           1000000     Measures cage metadata lookup and fork/wait lifecycle latency.                                  
+Fibonacci                 0                587 (1.000)    1813 (3.089)        --           10000       Compute Fibonacci(1000) to measure compute overhead.                                            
+Pipe (RTT)                1                1800 (1.000)   2436 (1.353)        --           1000000     Anonymous pipe RTT for PARAM bytes via parent/child ping-pong.                                  
+Pipe (RTT)                1024             1832 (1.000)   2434 (1.329)        --           1000000                                                                                                     
+Pipe (RTT)                4096             1911 (1.000)   2528 (1.323)        --           1000000                                                                                                     
+Pipe (RTT)                10240            3072 (1.000)   3898 (1.269)        --           10000                                                                                                       
+Read                      1                188 (1.000)    383 (2.037)         645 (3.431)  1000000     Issues pread() for buffer of size PARAM. / In-Memory File System grate interposing on FS calls. 
+Read                      1024             199 (1.000)    394 (1.980)         648 (3.256)  1000000                                                                                                     
+Read                      4096             217 (1.000)    415 (1.912)         673 (3.101)  1000000                                                                                                     
+Read                      10240            318 (1.000)    520 (1.635)         721 (2.267)  10000                                                                                                       
+Unix Domain Socket (RTT)  (DGRAM, 1)       2657 (1.000)   3256 (1.225)        --           1000000     (AF_UNIX, STREAM|DGRAM) RTT through ping-pong of PARAM bytes.                                   
+Unix Domain Socket (RTT)  (DGRAM, 1024)    2832 (1.000)   3470 (1.225)        --           1000000                                                                                                     
+Unix Domain Socket (RTT)  (DGRAM, 10240)   3646 (1.000)   4389 (1.204)        --           10000                                                                                                       
+Unix Domain Socket (RTT)  (DGRAM, 4096)    2961 (1.000)   3704 (1.251)        --           1000000                                                                                                     
+Unix Domain Socket (RTT)  (STREAM, 1)      3015 (1.000)   3108 (1.031)        --           1000000                                                                                                     
+Unix Domain Socket (RTT)  (STREAM, 1024)   2903 (1.000)   3151 (1.085)        --           1000000                                                                                                     
+Unix Domain Socket (RTT)  (STREAM, 10240)  4173 (1.000)   4563 (1.093)        --           10000                                                                                                       
+Unix Domain Socket (RTT)  (STREAM, 4096)   3287 (1.000)   3702 (1.126)        --           1000000                                                                                                     
+Write                     1                301 (1.000)    485 (1.611)         773 (2.568)  1000000     Issues pwrite() for buffer of size PARAM. / In-Memory File System grate interposing on FS calls.
+Write                     1024             311 (1.000)    494 (1.588)         778 (2.502)  1000000                                                                                                     
+Write                     4096             327 (1.000)    509 (1.557)         799 (2.443)  1000000                                                                                                     
+Write                     10240            556 (1.000)    744 (1.338)         847 (1.523)  10000                                                                                                       
+== run 5
+Running:  /home/lind/lind-wasm/tests/benchmarks/fs_write.c
+Running:  /home/lind/lind-wasm/tests/benchmarks/fs_read.c
+Running:  /home/lind/lind-wasm/tests/benchmarks/ipc_uds.c
+Running:  /home/lind/lind-wasm/tests/benchmarks/ipc_pipe.c
+Running:  /home/lind/lind-wasm/tests/benchmarks/cage_stress.c
+Running:  /home/lind/lind-wasm/tests/benchmarks/perf_fibonacci.c
+Running:  /home/lind/lind-wasm/tests/benchmarks/imfs-grate.fs_read.grate
+Running:  /home/lind/lind-wasm/tests/benchmarks/imfs-grate.fs_write.grate
+TEST                      PARAM            LINUX (ns)     LIND (ns)           GRATE (ns)   ITERATIONS  DESCRIPTION                                                                                     
+------------------------  ---------------  -------------  ------------------  -----------  ----------  ------------------------------------------------------------------------------------------------
+Cage fork + waitpid       -                48034 (1.000)  11934714 (248.464)  --           2000        Measures cage metadata lookup and fork/wait lifecycle latency.                                  
+Cage getpid               -                62 (1.000)     72 (1.161)          --           1000000     Measures cage metadata lookup and fork/wait lifecycle latency.                                  
+Cage getppid              -                63 (1.000)     72 (1.143)          --           1000000     Measures cage metadata lookup and fork/wait lifecycle latency.                                  
+Cage mixed lookup         -                62 (1.000)     102 (1.645)         --           1000000     Measures cage metadata lookup and fork/wait lifecycle latency.                                  
+Cage threaded lookup      4                63 (1.000)     128 (2.032)         --           1000000     Measures cage metadata lookup and fork/wait lifecycle latency.                                  
+Fibonacci                 0                860 (1.000)    1829 (2.127)        --           10000       Compute Fibonacci(1000) to measure compute overhead.                                            
+Pipe (RTT)                1                1828 (1.000)   2445 (1.338)        --           1000000     Anonymous pipe RTT for PARAM bytes via parent/child ping-pong.                                  
+Pipe (RTT)                1024             1859 (1.000)   2446 (1.316)        --           1000000                                                                                                     
+Pipe (RTT)                4096             1889 (1.000)   2520 (1.334)        --           1000000                                                                                                     
+Pipe (RTT)                10240            3001 (1.000)   3755 (1.251)        --           10000                                                                                                       
+Read                      1                188 (1.000)    383 (2.037)         643 (3.420)  1000000     Issues pread() for buffer of size PARAM. / In-Memory File System grate interposing on FS calls. 
+Read                      1024             199 (1.000)    394 (1.980)         647 (3.251)  1000000                                                                                                     
+Read                      4096             217 (1.000)    415 (1.912)         671 (3.092)  1000000                                                                                                     
+Read                      10240            313 (1.000)    522 (1.668)         724 (2.313)  10000                                                                                                       
+Unix Domain Socket (RTT)  (DGRAM, 1)       2621 (1.000)   3320 (1.267)        --           1000000     (AF_UNIX, STREAM|DGRAM) RTT through ping-pong of PARAM bytes.                                   
+Unix Domain Socket (RTT)  (DGRAM, 1024)    2800 (1.000)   3321 (1.186)        --           1000000                                                                                                     
+Unix Domain Socket (RTT)  (DGRAM, 10240)   3598 (1.000)   4560 (1.267)        --           10000                                                                                                       
+Unix Domain Socket (RTT)  (DGRAM, 4096)    2975 (1.000)   3787 (1.273)        --           1000000                                                                                                     
+Unix Domain Socket (RTT)  (STREAM, 1)      2774 (1.000)   3133 (1.129)        --           1000000                                                                                                     
+Unix Domain Socket (RTT)  (STREAM, 1024)   3409 (1.000)   3334 (0.978)        --           1000000                                                                                                     
+Unix Domain Socket (RTT)  (STREAM, 10240)  4277 (1.000)   4432 (1.036)        --           10000                                                                                                       
+Unix Domain Socket (RTT)  (STREAM, 4096)   3650 (1.000)   3835 (1.051)        --           1000000                                                                                                     
+Write                     1                302 (1.000)    486 (1.609)         775 (2.566)  1000000     Issues pwrite() for buffer of size PARAM. / In-Memory File System grate interposing on FS calls.
+Write                     1024             310 (1.000)    495 (1.597)         779 (2.513)  1000000                                                                                                     
+Write                     4096             327 (1.000)    509 (1.557)         802 (2.453)  1000000                                                                                                     
+Write                     10240            556 (1.000)    740 (1.331)         845 (1.520)  10000                                                                                                       

@@ -1,0 +1,5 @@
+[testing-grate] make_threei_call failed for syscall 0: MakeSyscallError(-4)
+AF_UNIX sock stream latency: 5.3217 microseconds
+[testing-grate] result: Ok(
+    0,
+)
